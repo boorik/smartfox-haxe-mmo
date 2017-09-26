@@ -1,0 +1,5 @@
+server/mmoextension
+server/lib/*.jar
+client/bin
+client/lib/*.js
+
