@@ -9,4 +9,4 @@ MMOExtension
 -java-lib lib/slf4j-log4j12-1.7.5.jar
 -java-lib lib/slf4j-api-1.7.5.jar
 
--cmd cp ~/projects/smartfox-haxe-mmo/server/mmoextension/mmoextension-Debug.jar ~/SmartFoxServer_2X/SFS2X/extensions/MMOExtension/
+-cmd cp /G/dev/projects/smartfox-haxe-mmo/server/mmoextension/mmoextension-Debug.jar /G/dev/tools/SmartFoxServer_2X/SFS2X/extensions/MMOExtension/

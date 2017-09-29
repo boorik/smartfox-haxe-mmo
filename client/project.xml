@@ -3,7 +3,7 @@
 	<!-- NMML reference: https://gist.github.com/1763850 -->
 	
 	<!-- metadata, make sure 'package' is at least 3 segments (ie. com.mycompany.myproject) -->
-	<meta title="fullstack-client" package="fullstack.client" version="1.0.0" company="vincent blanchet" />
+	<meta title="mmo-client" package="mmo.client" version="1.0.0" company="vincent blanchet" />
 	
 	<!-- output -->
 	<app main="Main" file="fullstack-client" path="bin" />

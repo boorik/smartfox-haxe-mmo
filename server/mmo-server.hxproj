@@ -25,7 +25,7 @@
     <option noInlineOnDebug="False" />
     <option mainClass="Main" />
     <option enabledebug="False" />
-    <option additional="" />
+    <option additional="-java-lib lib/sfs2x.jar&#xA;-java-lib lib/sfs2x-core.jar&#xA;-java-lib lib/slf4j-log4j12-1.7.5.jar&#xA;-java-lib lib/slf4j-api-1.7.5.jar" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>

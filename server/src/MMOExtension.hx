@@ -25,14 +25,14 @@ class MMOExtension extends SFSExtension
 		this.addEventHandler(SFSEventType.USER_LEAVE_ROOM, cast(UserLeavedHandler, java.lang.Class<Dynamic>));
 		this.addEventHandler(SFSEventType.USER_LOGOUT, cast(UserDisconnectedHandler, java.lang.Class<Dynamic>));
 		this.addEventHandler(SFSEventType.USER_DISCONNECT, cast(UserDisconnectedHandler, java.lang.Class<Dynamic>));
-		
+		this.addEventHandler(SFSEventType.USER_JOIN_ROOM, cast(UserJoinRoomHandler, java.lang.Class<Dynamic>));
 		/**
 		 * Request handlers
 		 */
 		//play game user want to start a game : getting free game room or creating one and warping him in
-		this.addRequestHandler(Commands.PLAY, cast(PlayGameHandler,java.lang.Class<Dynamic>));
+		//this.addRequestHandler(Commands.PLAY, cast(PlayGameHandler,java.lang.Class<Dynamic>));
 		this.addRequestHandler(Commands.MOVE, cast(MoveHandler, java.lang.Class<Dynamic>));
-		this.addRequestHandler(Commands.READY, cast(ReadyHandler, java.lang.Class<Dynamic>));
+		//this.addRequestHandler(Commands.READY, cast(ReadyHandler, java.lang.Class<Dynamic>));
 		
 		timeController = new TimeController(this);
 		timeController.start();
@@ -51,10 +51,11 @@ class MMOExtension extends SFSExtension
 		this.removeEventHandler(SFSEventType.USER_LEAVE_ROOM);
 		this.removeEventHandler(SFSEventType.USER_LOGOUT);
 		this.removeEventHandler(SFSEventType.USER_DISCONNECT);
+		this.removeEventHandler(SFSEventType.USER_JOIN_ROOM);
 		
-		this.removeRequestHandler(Commands.PLAY);
+		//this.removeRequestHandler(Commands.PLAY);
 		this.removeRequestHandler(Commands.MOVE);
-		this.removeRequestHandler(Commands.READY);
+		//this.removeRequestHandler(Commands.READY);
 	}
 	
 	public function log(obj:Dynamic):Void

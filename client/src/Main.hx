@@ -11,38 +11,20 @@ import openfl.events.MouseEvent;
  */
 class Main extends Sprite 
 {
-	/**
-	 * reference to all player avatars
-	 */
-	var avatars:Map<Int,Avatar>;
-	var me:Avatar;
-	var sfsHandler:SFSHandler;
-	var logTextField:flash.text.TextField;
+	
+	var clients:Array<Client>;
+	
 	public function new() 
 	{
 		super();
-		avatars = new Map<Int,Avatar>();
+		clients = [];
 		
-		logTextField = new flash.text.TextField();
-		logTextField.width = Lib.current.stage.stageWidth;
-		addChild(logTextField);
-		
-		sfsHandler = new SFSHandler();
-		sfsHandler.log = log;
-		sfsHandler.onReady = onReady;
-		sfsHandler.onMove = onMove;
-		sfsHandler.connect();
-		
-		var b = new openfl.utils.ByteArray();
-		log("endian:" + b.endian);
+		var c = new Client();
+		addChild(cast(c.view.mainScreen,Sprite));
+		c.init();
 	}
-	
-	function log(value:String)
-	{
-		logTextField.appendText(value+"\n");
-		logTextField.scrollV = logTextField.maxScrollV;
-	}
-	
+
+	/*
 	function onReady(startState:StartState)
 	{
 		//create all players
@@ -72,5 +54,6 @@ class Main extends Sprite
 		var av = avatars.get(move.user);
 		Actuate.tween(av, .5, {x:move.x, y:move.y});
 	}
+	*/
 
 }
