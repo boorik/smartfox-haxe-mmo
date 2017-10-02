@@ -12,6 +12,8 @@ import com.smartfoxserver.v2.entities.match.StringMatch;
 import com.smartfoxserver.v2.requests.ExtensionRequest;
 import com.smartfoxserver.v2.requests.LeaveRoomRequest;
 import com.smartfoxserver.v2.requests.LoginRequest;
+import com.smartfoxserver.v2.requests.mmo.SetUserPositionRequest;
+import com.smartfoxserver.v2.entities.data.Vec3D;
 import tools.SFSObjectTool;
 /**
  * ...
@@ -152,15 +154,17 @@ class SFSHandler
 	{
 		
 		log("Proximity update : " + e.parameters.room + " addedUsers:" + e.parameters.addedUsers + " removedUsers:" + e.parameters.removedUsers);
-		if (e.parameters.addedUsers > 0 )
+		var au:Array<User> = e.parameters.addedUsers;
+		log("added:"+au);
+		if (au.length > 0 )
 		{
-			var au:Array<User> = e.parameters.addedUsers;
+			log("toto");
 			for(u in au)
 				onUserAdded(u);
 		}
-		if (e.parameters.removedUsers > 0 )
+		var ru:Array<User> = e.parameters.removedUsers;
+		if (ru.length > 0 )
 		{
-			var ru:Array<User> = e.parameters.removedUsers;
 			for(u in ru)
 				onUserRemoved(u);
 		}
@@ -173,18 +177,18 @@ class SFSHandler
 	
 	private function onLogin(e:SFSEvent):Void 
 	{
-		log("Logged.");
+		log("Logged as "+me.name);
 		sfs.send(new com.smartfoxserver.v2.requests.JoinRoomRequest("Main"));
 		//play();
 	}
 	private function onRoomJoin(e:SFSEvent):Void 
 	{
 		log("Room joined:" + e.parameters.room.name);
+		sfs.send(new SetUserPositionRequest(new Vec3D(10,10,0)));
+
 	}
 	private function onConnection(e:SFSEvent):Void 
 	{
-		log("pouet");
-		log("onConnection = "+e.parameters.success);
 		if (e.parameters.success)
 		{
 			log("Connected");
@@ -201,7 +205,7 @@ class SFSHandler
 	
 	private function onSocketError(e:SFSEvent):Void 
 	{
-		log("socket error:" + e.params);
+		log("socket error:" + e.parameters);
 	}
 	
 	public function isAvailable():Bool

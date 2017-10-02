@@ -1,0 +1,9 @@
+{
+    "haxe.displayConfigurations": [ // one or more configurations for the haxe completion server
+        ["-cp", "src"], // a configuration is array of arguments passed to the completion server
+        ["build.hxml"] // hxml file is an normal haxe argument too
+    ],
+    "haxe.displayServer": { // configuration for starting haxe completion server itself
+        "arguments": ["-v"] // arguments before --wait (-v is useful for debugging)
+    }
+}

@@ -34,6 +34,7 @@ class Client
 	
 	function createPlayer(u:User)
 	{
+		view.log("createPlayer");
 		var p = new Player();
 		p.user = u;
 		view.createAvatar(u.id, u.name, u.aoiEntryPoint.px, u.aoiEntryPoint.py);

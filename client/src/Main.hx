@@ -18,10 +18,15 @@ class Main extends Sprite
 	{
 		super();
 		clients = [];
-		
-		var c = new Client();
-		addChild(cast(c.view.mainScreen,Sprite));
-		c.init();
+		var posY = 0.0;
+		for(i in 0...2)
+		{
+			var c = new Client();
+			c.view.mainScreen.y = posY;
+			addChild(cast(c.view.mainScreen,Sprite));
+			posY += c.view.mainScreen.height;
+			c.init();
+		}
 	}
 
 	/*

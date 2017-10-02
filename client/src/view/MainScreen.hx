@@ -16,6 +16,10 @@ class MainScreen extends openfl.display.Sprite
 		logTextField = new TextField();
 		logTextField.width = Lib.current.stage.stageWidth;
 		addChild(logTextField);
+
+		graphics.beginFill(Std.random(0xFFFFFF));
+		graphics.drawRect(0, 0, 600, 200);
+		graphics.endFill();
 	}
 	
 	public function log(value:String)
