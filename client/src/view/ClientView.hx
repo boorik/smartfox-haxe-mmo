@@ -13,6 +13,8 @@ class ClientView implements IView
 	{
 		avatars = new Map<Int,Avatar>();
 		mainScreen = new view.MainScreen();
+
+		mainScreen.addEventListener(flash.events.MouseEvent.CLICK,)
 	}
 	public function log(value:String)
 	{
@@ -20,19 +22,20 @@ class ClientView implements IView
 	}
 	public function createAvatar(id:Int, name:String, x:Float, y:Float):Void
 	{
-		log("createAvatar");
+		//trace("create Avatar at "+x+", "+y);
 		var a = new view.Avatar(id, name);
 		a.x = x;
 		a.y = y;
-		mainScreen.addChild(a);
+		mainScreen.addChildAt(a,0);
 		avatars.set(id,a);
 	}
-	public function moveAvatar(name:String, x:Float, y:Float):Void
+	public function moveAvatar(id:Int, x:Float, y:Float):Void
 	{
 		
 	}
-	public function removeAvatar(name:String):Void
+	public function removeAvatar(id:Int):Void
 	{
-		
+		mainScreen.removeChild(avatars.get(id));
+		avatars.remove(id);
 	}
 }
