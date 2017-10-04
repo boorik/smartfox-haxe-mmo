@@ -1,5 +1,6 @@
 package;
 import com.smartfoxserver.v2.entities.User;
+import com.smartfoxserver.v2.entities.Buddy;
 import interfaces.IView;
 /**
  * ...
@@ -31,9 +32,11 @@ class Client
 		sfsHandler.onUserAdded = createPlayer;
 		sfsHandler.onUserRemoved = removeUser;
 		sfsHandler.onUserMoved = moveUser;
+		sfsHandler.onBuddyList = displayBuddyList;
 		sfsHandler.connect();
 
 		view.moveCB = sfsHandler.sendPosition;
+		
 		
 	}
 
@@ -41,6 +44,8 @@ class Client
 	{
 		trace(sfsHandler.me.getVariables());
 		view.init(10,10);
+		sfsHandler.initBuddyList();
+		view.onAvatarClickedCB = onAvatarClicked;
 	}
 	
 	function createPlayer(u:User)
@@ -64,6 +69,17 @@ class Client
 	{
 		trace("move user to "+x+", "+y);
 		view.moveAvatar(u.id,x,y);
+	}
+
+	function displayBuddyList(bl:Array<Buddy>)
+	{
+		trace("buddies:"+bl);
+	}
+
+	function onAvatarClicked(id:Int)
+	{
+		trace("user id:"+id);
+		sfsHandler.addBuddy(players.get(id).user);
 	}
 	
 }

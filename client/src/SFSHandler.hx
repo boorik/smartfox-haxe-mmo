@@ -13,6 +13,8 @@ import com.smartfoxserver.v2.requests.mmo.SetUserPositionRequest;
 import com.smartfoxserver.v2.entities.data.Vec3D;
 import com.smartfoxserver.v2.entities.variables.SFSUserVariable;
 import com.smartfoxserver.v2.entities.variables.UserVariable;
+import com.smartfoxserver.v2.entities.Buddy;
+import com.smartfoxserver.v2.core.SFSBuddyEvent;
 import tools.SFSObjectTool;
 /**
  * ...
@@ -35,6 +37,7 @@ class SFSHandler
 	public var onUserMoved:User->Float->Float->Void;
 	public var onItemAdded:MMOItem->Void;
 	public var onItemRemoved:MMOItem->Void;
+	public var onBuddyList:Array<Buddy>->Void;
 	
 	static inline var USERVAR_X = "x";
 	static inline var USERVAR_Y = "y";
@@ -57,11 +60,8 @@ class SFSHandler
 	{
 		trace("on extension response");
 		var extParams:SFSObject = #if html5 e.params #else e.params.params #end;
-		#if html5
-		switch(e.cmd)
-		#else
-		switch(e.params.cmd)
-		#end
+
+		switch(e.parameters.cmd)
 		{
 			case Commands.TURN :
 				currentTurn = extParams.getUtfString("name");
@@ -254,6 +254,26 @@ class SFSHandler
 
 		sfs.send(new com.smartfoxserver.v2.requests.SetUserVariablesRequest(userVars));
 		sfs.send(new SetUserPositionRequest(new Vec3D(Math.fround(x),Math.fround(y),0)));
+	}
+
+	public function initBuddyList()
+	{
+		sfs.addEventListener(SFSBuddyEvent.BUDDY_ADD,onBuddyListInitialized);
+		sfs.addEventListener(SFSBuddyEvent.BUDDY_LIST_INIT,onBuddyListInitialized);
+		sfs.send(new com.smartfoxserver.v2.requests.buddylist.InitBuddyListRequest());
+	}
+
+	function onBuddyListInitialized(e:SFSBuddyEvent)
+	{
+		var buddies:Array<Buddy> = sfs.buddyManager.buddylist;
+
+		onBuddyList(buddies);
+
+	}
+
+	public function addBuddy(u:User)
+	{
+		sfs.send(new com.smartfoxserver.v2.requests.buddylist.AddBuddyRequest(u.name));
 	}
 	
 	

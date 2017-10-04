@@ -6,6 +6,7 @@ package interfaces;
 interface IView 
 {
 	var moveCB:Float->Float->Void;
+	var onAvatarClickedCB:Int->Void;
 	var mainScreen:view.MainScreen;
 	function log(value:String):Void;
 	function createAvatar(id:Int, name:String, x:Float, y:Float):Void;

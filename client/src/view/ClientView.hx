@@ -9,7 +9,9 @@ class ClientView implements IView
 {
 	public var mainScreen:view.MainScreen;
 	public var moveCB:Float->Float->Void;
+	public var onAvatarClickedCB:Int->Void;
 	var avatars:Map<Int,Avatar>;
+
 	public function new() 
 	{
 		avatars = new Map<Int,Avatar>();
@@ -34,6 +36,7 @@ class ClientView implements IView
 		var a = new view.Avatar(id, name);
 		a.x = x;
 		a.y = y;
+		a.addEventListener(flash.events.MouseEvent.CLICK,onAvatarClick);
 		mainScreen.world.addChild(a);
 		avatars.set(id,a);
 	}
@@ -54,6 +57,12 @@ class ClientView implements IView
 		trace("clicked");
 		mainScreen.moveTo(e.localX,e.localY);
 		moveCB(e.localX,e.localY);
+	}
+
+	function onAvatarClick(e:flash.events.MouseEvent)
+	{
+		trace("avatar clicked");
+		onAvatarClickedCB(cast(e.target,Avatar).id);
 	}
 
 	public function init(x:Float,y:Float)

@@ -22,10 +22,12 @@ class Avatar extends openfl.display.Sprite
 		nameTF.width = 32;
 		nameTF.height = 32;
 		nameTF.wordWrap = true;
+		nameTF.selectable = false;
+		nameTF.mouseEnabled = false;
 		addChild(nameTF);
 		
-		mouseChildren = false;
-		mouseEnabled = false;
+		//mouseChildren = false;
+		//mouseEnabled = false;
 	}
 	
 }
