@@ -24,12 +24,23 @@ class Client
 	
 	public function init()
 	{
+		
 		sfsHandler = new SFSHandler();
 		sfsHandler.log = view.log;
-		//sfsHandler.onReady = onReady;
+		sfsHandler.onReady = onReady;
 		sfsHandler.onUserAdded = createPlayer;
-		//sfsHandler.onMove = onMove;
+		sfsHandler.onUserRemoved = removeUser;
+		sfsHandler.onUserMoved = moveUser;
 		sfsHandler.connect();
+
+		view.moveCB = sfsHandler.sendPosition;
+		
+	}
+
+	function onReady()
+	{
+		trace(sfsHandler.me.getVariables());
+		view.init(10,10);
 	}
 	
 	function createPlayer(u:User)
@@ -38,7 +49,21 @@ class Client
 		view.log("createPlayer at "+u.aoiEntryPoint.px+", "+u.aoiEntryPoint.py);
 		var p = new Player();
 		p.user = u;
+		players.set(u.id,p);
 		view.createAvatar(u.id, u.name, u.aoiEntryPoint.px, u.aoiEntryPoint.py);
+	}
+
+	function removeUser(u:User)
+	{
+		view.removeAvatar(u.id);
+		players.remove(u.id);
+
+	}
+
+	function moveUser(u:User,x:Float,y:Float)
+	{
+		trace("move user to "+x+", "+y);
+		view.moveAvatar(u.id,x,y);
 	}
 	
 }

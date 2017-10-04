@@ -1,6 +1,5 @@
 package;
 import com.smartfoxserver.v2.entities.User;
-import view.Avatar;
 
 /**
  * ...

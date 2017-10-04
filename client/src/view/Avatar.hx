@@ -14,11 +14,14 @@ class Avatar extends openfl.display.Sprite
 		this.id = id;
 		
 		graphics.beginFill(Std.random(0xFFFFFF));
-		graphics.drawRect(0, 0, 100, 100);
+		graphics.drawRect(0, 0, 32, 32);
 		graphics.endFill();
 		
 		var nameTF = new flash.text.TextField();
 		nameTF.text = name;
+		nameTF.width = 32;
+		nameTF.height = 32;
+		nameTF.wordWrap = true;
 		addChild(nameTF);
 		
 		mouseChildren = false;

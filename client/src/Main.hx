@@ -21,8 +21,7 @@ class Main extends Sprite
 			var c = new Client();
 			c.view.mainScreen.y = posY;
 			addChild(cast(c.view.mainScreen,Sprite));
-			c.view.createAvatar(888,"TEST",0,0);
-			posY += c.view.mainScreen.height;
+			posY += 200;
 			c.init();
 		}
 	}
