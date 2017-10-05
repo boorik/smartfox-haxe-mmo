@@ -38,7 +38,8 @@ class SFSHandler
 	public var onItemAdded:MMOItem->Void;
 	public var onItemRemoved:MMOItem->Void;
 	public var onBuddyList:Array<Buddy>->Void;
-	
+	public var onPublicMessage:User->String->Void;
+
 	static inline var USERVAR_X = "x";
 	static inline var USERVAR_Y = "y";
 
@@ -134,6 +135,7 @@ class SFSHandler
 		sfs.addEventListener(SFSEvent.ROOM_JOIN, onRoomJoin);
 		sfs.addEventListener(SFSEvent.PROXIMITY_LIST_UPDATE, onProximityListUpdate);
 		sfs.addEventListener(SFSEvent.USER_VARIABLES_UPDATE, onUserVariableUpdate);
+		sfs.addEventListener(SFSEvent.PUBLIC_MESSAGE, onPublicMessageCB);
 		trace("config:" + config);
 		try{
 		#if html5
@@ -282,6 +284,17 @@ class SFSHandler
 	{
 		if(sfs.buddyManager.containsBuddy(b.name))
 			sfs.send(new com.smartfoxserver.v2.requests.buddylist.RemoveBuddyRequest(b.name));
+	}
+
+	function onPublicMessageCB(e:SFSEvent)
+	{
+		
+		onPublicMessage(e.parameters.sender,e.parameters.message);
+	}
+
+	public function sendPublic(msg:String)
+	{
+		sfs.send(new com.smartfoxserver.v2.requests.PublicMessageRequest(msg));
 	}
 	
 	

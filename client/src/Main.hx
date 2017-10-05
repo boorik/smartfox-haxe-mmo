@@ -19,9 +19,9 @@ class Main extends Sprite
 		for(i in 0...2)
 		{
 			var c = new Client();
-			c.view.mainScreen.y = posY;
-			addChild(cast(c.view.mainScreen,Sprite));
-			posY += 200;
+			cast(c.view,Sprite).y = posY;
+			addChild(cast(c.view,Sprite));
+			posY += Globals.clientHeight;
 			c.init();
 		}
 	}

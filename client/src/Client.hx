@@ -33,6 +33,7 @@ class Client
 		sfsHandler.onUserRemoved = removeUser;
 		sfsHandler.onUserMoved = moveUser;
 		sfsHandler.onBuddyList = displayBuddyList;
+		sfsHandler.onPublicMessage = displayPublicMsg;
 		sfsHandler.connect();
 
 		view.moveCB = sfsHandler.sendPosition;
@@ -46,6 +47,7 @@ class Client
 		sfsHandler.initBuddyList();
 		view.onAvatarClickedCB = onAvatarClicked;
 		view.onBuddyClickedCB = sfsHandler.removeBuddy;
+		view.onTextInputCB = sfsHandler.sendPublic;
 	}
 	
 	function createPlayer(u:User)
@@ -83,6 +85,11 @@ class Client
 		trace("user id:"+id);
 		trace("user:"+players.get(id).user);
 		sfsHandler.addBuddy(players.get(id).user);
+	}
+
+	function displayPublicMsg(u:User,msg:String)
+	{
+		view.displayPublicMessage(u.name+" : "+msg);
 	}
 	
 }

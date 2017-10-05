@@ -11,9 +11,14 @@ class MainScreen extends openfl.display.Sprite
 	public var logTextField:TextField;
 	var origin:flash.geom.Point;
 	public var world:Sprite;
+	public var dWidth:Float;
+	public var dHeight:Float;
 	public function new() 
 	{
 		super();
+
+		dWidth = Globals.gameViewWidthRatio*Globals.clientWidth;
+		dHeight = Globals.gameViewHeightRatio*Globals.clientHeight;
 
 		world = new Sprite();
 		addChild(world);
@@ -21,14 +26,14 @@ class MainScreen extends openfl.display.Sprite
 		
 		logTextField = new TextField();
 		logTextField.width = Lib.current.stage.stageWidth;
-		logTextField.x = 400;
+		logTextField.x = dWidth;
 		addChild(logTextField);
 
 		graphics.beginFill(Std.random(0xFFFFFF));
-		graphics.drawRect(0, 0, 600, 200);
+		graphics.drawRect(0, 0, dWidth, dHeight);
 		graphics.endFill();
 
-		origin = new flash.geom.Point(200,100);
+		origin = new flash.geom.Point(dWidth/2,dHeight/2);
 	}
 	
 	public function log(value:String)
@@ -54,7 +59,7 @@ class MainScreen extends openfl.display.Sprite
 			}
 		}
 		var bmp = new flash.display.Bitmap(bmpdata);
-		var floorMask = new flash.display.Bitmap(new flash.display.BitmapData(400,200));
+		var floorMask = new flash.display.Bitmap(new flash.display.BitmapData(Std.int(dWidth),Std.int(dHeight)));
 		addChild(floorMask);
 		world.mask = floorMask;
 		world.addChild(bmp);
