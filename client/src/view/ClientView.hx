@@ -1,6 +1,6 @@
 package view;
 import interfaces.IView;
-
+import com.smartfoxserver.v2.entities.Buddy;
 /**
  * ...
  * @author vincent blanchet
@@ -10,12 +10,18 @@ class ClientView implements IView
 	public var mainScreen:view.MainScreen;
 	public var moveCB:Float->Float->Void;
 	public var onAvatarClickedCB:Int->Void;
+	public var onBuddyClickedCB:Buddy->Void;
 	var avatars:Map<Int,Avatar>;
+	var buddyListView:view.BuddyListView;
 
 	public function new() 
 	{
 		avatars = new Map<Int,Avatar>();
 		mainScreen = new view.MainScreen();
+		buddyListView = new view.BuddyListView();
+		buddyListView.onBuddyClicked = onBuddyClicked;
+		buddyListView.x = 400;
+		mainScreen.addChild(buddyListView);
 
 		var a = new view.Avatar(-1, "me");
 		a.x = (400 - a.width)/2;
@@ -48,7 +54,9 @@ class ClientView implements IView
 	public function removeAvatar(id:Int):Void
 	{
 		trace("removeAvatar "+id);
-		mainScreen.world.removeChild(avatars.get(id));
+		var a = avatars.get(id);
+		a.removeEventListener(flash.events.MouseEvent.CLICK,onAvatarClick);
+		mainScreen.world.removeChild(a);
 		avatars.remove(id);
 	}
 
@@ -68,5 +76,15 @@ class ClientView implements IView
 	public function init(x:Float,y:Float)
 	{
 		mainScreen.moveTo(x,y);
+	}
+
+	public function updateBuddyList(ab:Array<com.smartfoxserver.v2.entities.Buddy>)
+	{
+		buddyListView.update(ab);
+	}
+
+	function onBuddyClicked(b:Buddy)
+	{
+		onBuddyClickedCB(b);
 	}
 }

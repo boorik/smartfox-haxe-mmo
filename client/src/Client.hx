@@ -37,7 +37,6 @@ class Client
 
 		view.moveCB = sfsHandler.sendPosition;
 		
-		
 	}
 
 	function onReady()
@@ -46,6 +45,7 @@ class Client
 		view.init(10,10);
 		sfsHandler.initBuddyList();
 		view.onAvatarClickedCB = onAvatarClicked;
+		view.onBuddyClickedCB = sfsHandler.removeBuddy;
 	}
 	
 	function createPlayer(u:User)
@@ -74,11 +74,14 @@ class Client
 	function displayBuddyList(bl:Array<Buddy>)
 	{
 		trace("buddies:"+bl);
+		view.updateBuddyList(bl);
 	}
 
 	function onAvatarClicked(id:Int)
 	{
+		trace("players:"+players);
 		trace("user id:"+id);
+		trace("user:"+players.get(id).user);
 		sfsHandler.addBuddy(players.get(id).user);
 	}
 	
