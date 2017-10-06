@@ -16,6 +16,9 @@ class Client
 	var sfsHandler:SFSHandler;
 	
 	public var view:IView;
+
+	var privReg = ~/^ *@[A-Z0-9-#]+ /i;
+ 	var targetReg = ~/[A-Z0-9-#]+/i;
 	public function new() 
 	{
 		players = new Map<Int,Player>();
@@ -94,7 +97,15 @@ class Client
 
 	function onTextInput(msg:String)
 	{
-
+		if(privReg.match(msg))
+		{
+			targetReg.match(privReg.matched(0));
+			var t = targetReg.matched(0);
+			trace("private message to "+t);
+			sfsHandler.sendPrivate(t,msg);
+		}else{
+			sfsHandler.sendPublic(msg);
+		}
 	}
 	
 }

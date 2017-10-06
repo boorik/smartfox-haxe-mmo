@@ -136,6 +136,7 @@ class SFSHandler
 		sfs.addEventListener(SFSEvent.PROXIMITY_LIST_UPDATE, onProximityListUpdate);
 		sfs.addEventListener(SFSEvent.USER_VARIABLES_UPDATE, onUserVariableUpdate);
 		sfs.addEventListener(SFSEvent.PUBLIC_MESSAGE, onPublicMessageCB);
+		sfs.addEventListener(SFSEvent.PRIVATE_MESSAGE, onPublicMessageCB);
 		trace("config:" + config);
 		try{
 		#if html5
@@ -297,5 +298,12 @@ class SFSHandler
 		sfs.send(new com.smartfoxserver.v2.requests.PublicMessageRequest(msg));
 	}
 	
-	
+	public function sendPrivate(name:String,msg:String)
+	{
+		var u = sfs.userManager.getUserByName(name);
+		if(u!=null)
+		{
+			sfs.send(new com.smartfoxserver.v2.requests.PrivateMessageRequest(msg,u.id));
+		}
+	}
 }
