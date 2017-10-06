@@ -1,7 +1,6 @@
 package view;
 
 import flash.text.TextField;
-import flash.events.TextEvent;
 import flash.events.KeyboardEvent;
 class ChatView extends flash.display.Sprite
 {

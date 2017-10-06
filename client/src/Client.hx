@@ -47,7 +47,7 @@ class Client
 		sfsHandler.initBuddyList();
 		view.onAvatarClickedCB = onAvatarClicked;
 		view.onBuddyClickedCB = sfsHandler.removeBuddy;
-		view.onTextInputCB = sfsHandler.sendPublic;
+		view.onTextInputCB = onTextInput;
 	}
 	
 	function createPlayer(u:User)
@@ -90,6 +90,11 @@ class Client
 	function displayPublicMsg(u:User,msg:String)
 	{
 		view.displayPublicMessage(u.name+" : "+msg);
+	}
+
+	function onTextInput(msg:String)
+	{
+
 	}
 	
 }
