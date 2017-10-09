@@ -39,8 +39,8 @@ class ChatView extends flash.display.Sprite
     public function append(t:String)
     {
         output.appendText(t+"\n");
-        trace("output.maxScrollV"+output.maxScrollV);
-        trace("output.bottomScrollV"+output.bottomScrollV);
+        //trace("output.maxScrollV"+output.maxScrollV);
+        //trace("output.bottomScrollV"+output.bottomScrollV);
         //if(output.numLines > output.bottomScrollV)
         output.scrollV = output.numLines - output.bottomScrollV;
     }

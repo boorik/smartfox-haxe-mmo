@@ -17,8 +17,8 @@ class Client
 	
 	public var view:IView;
 
-	var privReg = ~/^ *@[A-Z0-9-#]+ /i;
- 	var targetReg = ~/[A-Z0-9-#]+/i;
+	var privReg = ~/^ *@[A-Z0-9.#]+ /i;
+ 	var targetReg = ~/[A-Z0-9.#]+/i;
 	public function new() 
 	{
 		players = new Map<Int,Player>();
@@ -40,6 +40,7 @@ class Client
 		sfsHandler.connect();
 
 		view.moveCB = sfsHandler.sendPosition;
+	
 		
 	}
 
@@ -51,16 +52,15 @@ class Client
 		view.onAvatarClickedCB = onAvatarClicked;
 		view.onBuddyClickedCB = sfsHandler.removeBuddy;
 		view.onTextInputCB = onTextInput;
+		view.displayAOI(Std.int(sfsHandler.aoi().px),Std.int(sfsHandler.aoi().py));
 	}
 	
 	function createPlayer(u:User)
 	{
-		view.log("pl:"+u);
-		view.log("createPlayer at "+u.aoiEntryPoint.px+", "+u.aoiEntryPoint.py);
 		var p = new Player();
 		p.user = u;
 		players.set(u.id,p);
-		view.createAvatar(u.id, u.name, u.aoiEntryPoint.px, u.aoiEntryPoint.py);
+		haxe.Timer.measure(view.createAvatar.bind(u.id, u.name, u.aoiEntryPoint.px, u.aoiEntryPoint.py));
 	}
 
 	function removeUser(u:User)
@@ -72,7 +72,6 @@ class Client
 
 	function moveUser(u:User,x:Float,y:Float)
 	{
-		trace("move user to "+x+", "+y);
 		view.moveAvatar(u.id,x,y);
 	}
 
@@ -84,9 +83,6 @@ class Client
 
 	function onAvatarClicked(id:Int)
 	{
-		trace("players:"+players);
-		trace("user id:"+id);
-		trace("user:"+players.get(id).user);
 		sfsHandler.addBuddy(players.get(id).user);
 	}
 

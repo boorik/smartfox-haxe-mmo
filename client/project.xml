@@ -6,10 +6,10 @@
 	<meta title="mmo-client" package="mmo.client" version="1.0.0" company="vincent blanchet" />
 	
 	<!-- output -->
-	<app main="Main" file="fullstack-client" path="bin" />
+	<app main="Main" file="mmo-client" path="bin" />
 	
 	<window background="#FFFFFF" fps="60" />
-	<window width="800" height="480" unless="mobile" />
+	<window width="1184" height="720" unless="mobile" />
 	<window orientation="landscape" vsync="false" antialiasing="0" if="cpp" />
 	
 	<!-- classpath, haxe libs -->
@@ -22,7 +22,7 @@
 	
 	<!-- assets -->
 	<icon path="assets/openfl.svg" />
-	<!--assets path="assets/img" rename="img" /-->
+	<assets path="assets/images" rename="images" />
 	
 	<!-- optimize output
 	<haxeflag name="-dce full" /> -->

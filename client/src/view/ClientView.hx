@@ -9,7 +9,7 @@ class ClientView implements IView extends flash.display.Sprite
 {
 	public var mainScreen:view.MainScreen;
 
-	public var moveCB:Float->Float->Void;
+	public var moveCB(default,set):Float->Float->Void;
 	public var onAvatarClickedCB:Int->Void;
 	public var onBuddyClickedCB:Buddy->Void;
 	public var onTextInputCB:String->Void;
@@ -40,6 +40,12 @@ class ClientView implements IView extends flash.display.Sprite
 		addChild(chatView);
 	}
 
+	function set_moveCB(value:Float->Float->Void):Float->Float->Void
+	{
+		moveCB = value;
+		mainScreen.moveCB = value;
+		return moveCB;
+	}
 	function createMe()
 	{
 		var a = new view.Avatar(-1, "me");
@@ -81,14 +87,12 @@ class ClientView implements IView extends flash.display.Sprite
 
 	function onMouseClick(e:flash.events.MouseEvent)
 	{
-		trace("clicked");
 		mainScreen.moveTo(e.localX,e.localY);
-		moveCB(e.localX,e.localY);
+		//moveCB(e.localX,e.localY);
 	}
 
 	function onAvatarClick(e:flash.events.MouseEvent)
 	{
-		trace("avatar clicked");
 		onAvatarClickedCB(cast(e.target,Avatar).id);
 	}
 
@@ -115,5 +119,10 @@ class ClientView implements IView extends flash.display.Sprite
 	public function displayPublicMessage(msg:String)
 	{
 		chatView.append(msg);
+	}
+
+	public function displayAOI(width:Int,height:Int)
+	{
+		mainScreen.displayAOI(width,height);
 	}
 }

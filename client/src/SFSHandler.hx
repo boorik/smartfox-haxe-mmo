@@ -3,6 +3,7 @@ import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.core.SFSEvent;
 import Commands;
 import Move;
+import com.smartfoxserver.v2.entities.MMORoom;
 import com.smartfoxserver.v2.entities.MMOItem;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.data.SFSObject;
@@ -114,7 +115,7 @@ class SFSHandler
 		#else
 		var config:com.smartfoxserver.v2.SmartFox.ConfigObj = {host:"",port:0,useSSL:false,zone:"",debug:true};
 		#end
-		config.debug = true;
+		//config.debug = true;
 		config.host = "127.0.0.1";
 		config.port = #if html5 8080 #else 9933 #end;
 		config.zone = "SimpleMMOWorld";
@@ -122,7 +123,7 @@ class SFSHandler
 		sfs = new com.smartfoxserver.v2.SmartFox(config);
 		sfs.logger.level = 0;
 		#else
-		sfs = new com.smartfoxserver.v2.SmartFox(true);
+		sfs = new com.smartfoxserver.v2.SmartFox();
 		#end
 		sfs.addEventListener(SFSEvent.CONNECTION, onConnection);
 		sfs.addEventListener(SFSEvent.SOCKET_ERROR, onSocketError);
@@ -151,7 +152,7 @@ class SFSHandler
 
 	private function onUserVariableUpdate(e:SFSEvent):Void 
 	{
-		trace("===> onUserVariableUpdate");
+		//trace("===> onUserVariableUpdate");
 		var changedVars:Array<String> = e.parameters.changedVars;
 		var user:User = e.parameters.user;
 		
@@ -169,12 +170,10 @@ class SFSHandler
 	private function onProximityListUpdate(e:SFSEvent):Void 
 	{
 		
-		log("Proximity update : " + e.parameters.room + " addedUsers:" + e.parameters.addedUsers + " removedUsers:" + e.parameters.removedUsers);
+		//log("Proximity update : " + e.parameters.room + " addedUsers:" + e.parameters.addedUsers + " removedUsers:" + e.parameters.removedUsers);
 		var au:Array<User> = e.parameters.addedUsers;
-		log("added:"+au);
 		if (au.length > 0 )
 		{
-			log("toto");
 			for(u in au)
 				onUserAdded(u);
 		}
@@ -248,9 +247,14 @@ class SFSHandler
 		return cast sfs.mySelf;
 	}
 
+	public function aoi():Vec3D{
+		var r:MMORoom = cast sfs.lastJoinedRoom;
+		return r.defaultAOI;
+	}
+
 	public function sendPosition(x:Float,y:Float)
 	{
-		
+		trace("pos:"+x+", "+y);
 		var userVars:Array<UserVariable> = [];
 		userVars.push(new SFSUserVariable(USERVAR_X, x));
 		userVars.push(new SFSUserVariable(USERVAR_Y, y));
