@@ -17,6 +17,7 @@ class ClientView implements IView extends flash.display.Sprite
 	var avatars:Map<Int,Avatar>;
 	var buddyListView:view.BuddyListView;
 	var chatView:view.ChatView;
+	var login:view.LoginView;
 	public function new() 
 	{
 		super();
@@ -124,5 +125,17 @@ class ClientView implements IView extends flash.display.Sprite
 	public function displayAOI(width:Int,height:Int)
 	{
 		mainScreen.displayAOI(width,height);
+	}
+
+	public function showLogin(n:String,cb:String->Void):Void
+	{
+		login = new view.LoginView(n,cb);
+		login.x = (mainScreen.dWidth - login.width)/2;
+		login.y = (mainScreen.dHeight  - login.height)/2;
+		addChild(login);
+	}
+	public function hideLogin():Void
+	{
+		removeChild(login);
 	}
 }

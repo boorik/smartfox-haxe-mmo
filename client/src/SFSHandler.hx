@@ -23,6 +23,7 @@ import tools.SFSObjectTool;
  */
 class SFSHandler
 {
+	var nick:String;
 	var sfs:SmartFox;
 	public var onMove:Move->Void;
 	public var onTurn:Int->String->Void;
@@ -106,8 +107,9 @@ class SFSHandler
 	}
 	
 	
-	public function connect():Void
+	public function connect(nick:String):Void
 	{
+		this.nick = nick;
 		#if !html5 
 		var config:com.smartfoxserver.v2.util.ConfigData = new com.smartfoxserver.v2.util.ConfigData();
 		config.httpPort = 8080;
@@ -118,7 +120,7 @@ class SFSHandler
 		//config.debug = true;
 		config.host = "127.0.0.1";
 		config.port = #if html5 8080 #else 9933 #end;
-		config.zone = "SimpleMMOWorld";
+		config.zone = "SimpleMMOWorld2";
 		#if html5
 		sfs = new com.smartfoxserver.v2.SmartFox(config);
 		sfs.logger.level = 0;
@@ -193,7 +195,8 @@ class SFSHandler
 	private function onLogin(e:SFSEvent):Void 
 	{
 		log("Logged as "+me.name);
-		sfs.send(new com.smartfoxserver.v2.requests.JoinRoomRequest("The Map"));
+
+		sfs.send(new com.smartfoxserver.v2.requests.JoinRoomRequest(sfs.roomList[0].name));
 		//play();
 	}
 	private function onRoomJoin(e:SFSEvent):Void 
@@ -210,9 +213,9 @@ class SFSHandler
 			log("Connected");
 			sfs.addEventListener(SFSEvent.LOGIN, onLogin);
 			#if html5
-			sfs.send(new LoginRequest(null, null, null, "SimpleMMOWorld"));
+			sfs.send(new LoginRequest(nick, null, null, "SimpleMMOWorld2"));
 			#else
-			sfs.send(new LoginRequest(null, null, "SimpleMMOWorld"));
+			sfs.send(new LoginRequest(nick, null, "SimpleMMOWorld2"));
 			#end
 		}else{
 			log("Not connected to internet");

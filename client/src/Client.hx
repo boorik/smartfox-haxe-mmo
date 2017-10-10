@@ -24,9 +24,11 @@ class Client
 		players = new Map<Int,Player>();
 		
 		view = new view.ClientView();
+		view.showLogin("nick",init);
+		
 	}
 	
-	public function init()
+	public function init(name:String)
 	{
 		
 		sfsHandler = new SFSHandler();
@@ -37,7 +39,7 @@ class Client
 		sfsHandler.onUserMoved = moveUser;
 		sfsHandler.onBuddyList = displayBuddyList;
 		sfsHandler.onPublicMessage = displayPublicMsg;
-		sfsHandler.connect();
+		sfsHandler.connect(name);
 
 		view.moveCB = sfsHandler.sendPosition;
 	
@@ -46,6 +48,8 @@ class Client
 
 	function onReady()
 	{
+		view.hideLogin();
+
 		trace(sfsHandler.me.getVariables());
 		view.init(10,10);
 		sfsHandler.initBuddyList();

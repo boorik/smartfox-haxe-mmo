@@ -1,12 +1,13 @@
 <zone>
   <name>MMOHaxe</name>
   <isCustomLogin>false</isCustomLogin>
-  <isForceLogout>false</isForceLogout>
+  <isForceLogout>true</isForceLogout>
   <applyWordsFilterToUserName>true</applyWordsFilterToUserName>
   <applyWordsFilterToRoomName>true</applyWordsFilterToRoomName>
   <applyWordsFilterToPrivateMessages>true</applyWordsFilterToPrivateMessages>
   <isFilterBuddyMessages>true</isFilterBuddyMessages>
-  <maxUsers>1000</maxUsers>
+  <isEncrypted>false</isEncrypted>
+  <maxUsers>100000</maxUsers>
   <maxUserVariablesAllowed>10</maxUserVariablesAllowed>
   <maxRoomVariablesAllowed>10</maxRoomVariablesAllowed>
   <minRoomNameChars>1</minRoomNameChars>
@@ -16,11 +17,15 @@
   <userCountChangeUpdateInterval>1000</userCountChangeUpdateInterval>
   <userReconnectionSeconds>0</userReconnectionSeconds>
   <overrideMaxUserIdleTime>300</overrideMaxUserIdleTime>
+  <maxFailedLogins>4</maxFailedLogins>
   <allowGuestUsers>true</allowGuestUsers>
   <guestUserNamePrefix>Guest#</guestUserNamePrefix>
-  <publicRoomGroups>default,games,chats</publicRoomGroups>
-  <defaultRoomGroups>default,games,chats</defaultRoomGroups>
+  <publicRoomGroups>default</publicRoomGroups>
+  <defaultRoomGroups>default</defaultRoomGroups>
   <defaultPlayerIdGeneratorClass></defaultPlayerIdGeneratorClass>
+  <allowInvitationsOnlyForBuddies>false</allowInvitationsOnlyForBuddies>
+  <maxUsersPerJoinInvitationRequest>5</maxUsersPerJoinInvitationRequest>
+  <geoLocationEnabled>false</geoLocationEnabled>
   <wordsFilter active="false">
     <useWarnings>false</useWarnings>
     <warningsBeforeKick>3</warningsBeforeKick>
@@ -58,9 +63,9 @@
       <autoRemoveMode>DEFAULT</autoRemoveMode>
       <permissions>
         <flags>PUBLIC_MESSAGES</flags>
-        <maxRoomVariablesAllowed>10</maxRoomVariablesAllowed>
+        <maxRoomVariablesAllowed>20</maxRoomVariablesAllowed>
       </permissions>
-      <events>USER_ENTER_EVENT,USER_EXIT_EVENT,USER_COUNT_CHANGE_EVENT,USER_VARIABLES_UPDATE_EVENT</events>
+      <events>USER_COUNT_CHANGE_EVENT,USER_VARIABLES_UPDATE_EVENT</events>
       <badWordsFilter isActive="false"/>
       <roomVariables/>
       <extension>
@@ -70,8 +75,18 @@
         <propertiesFile></propertiesFile>
         <reloadMode>AUTO</reloadMode>
       </extension>
+      <mmoSettings>
+        <isActive>true</isActive>
+        <defaultAOI>240,180,0</defaultAOI>
+        <lowerMapLimit>0,0,0</lowerMapLimit>
+        <higherMapLimit>1400,745,0</higherMapLimit>
+        <forceFloats>false</forceFloats>
+        <userMaxLimboSeconds>30</userMaxLimboSeconds>
+        <proximityListUpdateMillis>250</proximityListUpdateMillis>
+        <sendAOIEntryPoint>true</sendAOIEntryPoint>
+      </mmoSettings>
+      <allowOwnerInvitation>true</allowOwnerInvitation>
     </room>
-
   </rooms>
   <disabledSystemEvents/>
   <privilegeManager active="false">
@@ -140,4 +155,5 @@
     <exhaustedPoolAction>FAIL</exhaustedPoolAction>
     <blockTime>3000</blockTime>
   </databaseManager>
+  <allowUploads>false</allowUploads>
 </zone>

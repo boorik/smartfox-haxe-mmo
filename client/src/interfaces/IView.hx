@@ -20,4 +20,6 @@ interface IView
 	function updateBuddyList(ab:Array<com.smartfoxserver.v2.entities.Buddy>):Void;
 	function displayPublicMessage(msg:String):Void;
 	function displayAOI(width:Int,height:Int):Void;
+	function showLogin(name:String,cb:String->Void):Void;
+	function hideLogin():Void;
 }
