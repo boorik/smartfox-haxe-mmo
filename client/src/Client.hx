@@ -1,11 +1,14 @@
 package;
 import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.Buddy;
+import com.smartfoxserver.v2.entities.MMORoom;
+import com.smartfoxserver.v2.entities.Room;
 import interfaces.IView;
 /**
  * ...
  * @author vincent blanchet
  */
+
 class Client
 {
 	/**
@@ -15,6 +18,8 @@ class Client
 	var me:Player;
 	var sfsHandler:SFSHandler;
 	
+	var itemsByRoomName:Map<String,MapData>;
+
 	public var view:IView;
 
 	var privReg = ~/^ *@[A-Z0-9.#]+ /i;
@@ -24,8 +29,16 @@ class Client
 		players = new Map<Int,Player>();
 		
 		view = new view.ClientView();
+		view.onMapSelected = onMapSelected;
 		view.showLogin("nick",init);
 		
+	}
+
+	function onMapSelected(roomName:String)
+	{
+		trace("selected:"+roomName);
+		view.hideLevelSelect();
+		sfsHandler.joinRoom(roomName);
 	}
 	
 	public function init(name:String)
@@ -39,11 +52,55 @@ class Client
 		sfsHandler.onUserMoved = moveUser;
 		sfsHandler.onBuddyList = displayBuddyList;
 		sfsHandler.onPublicMessage = displayPublicMsg;
+		sfsHandler.onLogin = onLogin;
 		sfsHandler.connect(name);
 
 		view.moveCB = sfsHandler.sendPosition;
 	
 		
+	}
+
+	function onLogin(ra:Array<Room>)
+	{
+		itemsByRoomName = new Map<String,MapData>();
+		for(r in ra)
+		{
+			var mmoRoom:MMORoom = cast r;
+			var setupObj = mmoRoom.getVariable("mapItems").getSFSObjectValue();
+			var items = [];
+			for(itemKey in setupObj.getKeys() )
+			{
+				trace(itemKey);
+				var itemdata = setupObj.getSFSObject(itemKey);
+				
+				var item = new ItemData();
+				item.bitmapdata = Globals.envBitmapDatas.get(itemKey);
+				item.regX = itemdata.getInt("rx");
+				item.regX = itemdata.getInt("ry");
+				var coordsArray = itemdata.getIntArray("coords");
+				item.coordinates = [];
+				for(i in 0...Std.int(coordsArray.length/2))
+				{
+					var index = i*2;
+					item.coordinates.push(new flash.geom.Point(coordsArray[index],coordsArray[index+1]));
+				}
+				items.push(item);
+			}
+
+			var mapData = new MapData();
+			mapData.name = mmoRoom.name;
+			mapData.fileName = mmoRoom.name.toLowerCase();
+			var reg = ~/ /g;
+			mapData.fileName = reg.replace(mapData.fileName,"-");
+			mapData.itemDatas = items;
+			itemsByRoomName.set(mmoRoom.name,mapData);
+
+			
+		}
+
+		view.showLevelSelect(itemsByRoomName);
+		
+
 	}
 
 	function onReady()

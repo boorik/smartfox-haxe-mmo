@@ -14,6 +14,9 @@ class Main extends Sprite
 	public function new() 
 	{
 		super();
+
+		Globals.initSpriteSheets();
+
 		clients = [];
 		var posY = 0.0;
 		for(i in 0...2)

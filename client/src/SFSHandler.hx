@@ -3,6 +3,7 @@ import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.core.SFSEvent;
 import Commands;
 import Move;
+import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.MMORoom;
 import com.smartfoxserver.v2.entities.MMOItem;
 import com.smartfoxserver.v2.entities.User;
@@ -28,6 +29,7 @@ class SFSHandler
 	public var onMove:Move->Void;
 	public var onTurn:Int->String->Void;
 	public var onReady:Void->Void;
+	public var onLogin:Array<Room>->Void;
 	//public var onEnd:EndResult->Void;
 	public var currentTurn:String;
 	public var currentTurnId:Int;
@@ -192,13 +194,19 @@ class SFSHandler
 		log("Connection lost!!!");
 	}
 	
-	private function onLogin(e:SFSEvent):Void 
+	private function onLoginCB(e:SFSEvent):Void 
 	{
 		log("Logged as "+me.name);
-
-		sfs.send(new com.smartfoxserver.v2.requests.JoinRoomRequest(sfs.roomList[0].name));
+		onLogin(sfs.roomList);
+		
 		//play();
 	}
+
+	public function joinRoom(roomName:String)
+	{
+		sfs.send(new com.smartfoxserver.v2.requests.JoinRoomRequest(roomName));
+	}
+	
 	private function onRoomJoin(e:SFSEvent):Void 
 	{
 		log("Room joined:" + e.parameters.room.name);
@@ -211,7 +219,7 @@ class SFSHandler
 		if (e.parameters.success)
 		{
 			log("Connected");
-			sfs.addEventListener(SFSEvent.LOGIN, onLogin);
+			sfs.addEventListener(SFSEvent.LOGIN, onLoginCB);
 			#if html5
 			sfs.send(new LoginRequest(nick, null, null, "SimpleMMOWorld2"));
 			#else

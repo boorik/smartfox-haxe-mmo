@@ -18,6 +18,7 @@
 	<haxelib name="openfl" />
 	<haxelib name="actuate" />
 	<haxelib name="smartfox-haxe-client"/>
+	<haxelib name="spritesheet"/>
 	<dependency path="lib/sfs2x-api-1.7.6.js" if="html5" />
 	
 	<!-- assets -->

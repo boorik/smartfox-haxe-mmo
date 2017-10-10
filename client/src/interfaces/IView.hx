@@ -11,6 +11,7 @@ interface IView
 	var onBuddyClickedCB:Buddy->Void;
 	var onTextInputCB:String->Void;
 	var mainScreen:view.MainScreen;
+	var onMapSelected:String->Void;
 	
 	function log(value:String):Void;
 	function createAvatar(id:Int, name:String, x:Float, y:Float):Void;
@@ -22,4 +23,6 @@ interface IView
 	function displayAOI(width:Int,height:Int):Void;
 	function showLogin(name:String,cb:String->Void):Void;
 	function hideLogin():Void;
+	function showLevelSelect(mapItems:Map<String,MapData>):Void;
+	function hideLevelSelect():Void;
 }

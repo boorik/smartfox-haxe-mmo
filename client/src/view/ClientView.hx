@@ -13,11 +13,14 @@ class ClientView implements IView extends flash.display.Sprite
 	public var onAvatarClickedCB:Int->Void;
 	public var onBuddyClickedCB:Buddy->Void;
 	public var onTextInputCB:String->Void;
+	public var onMapSelected:String->Void;
 
 	var avatars:Map<Int,Avatar>;
 	var buddyListView:view.BuddyListView;
 	var chatView:view.ChatView;
 	var login:view.LoginView;
+	var mapSelector:LevelSelectView;
+	
 	public function new() 
 	{
 		super();
@@ -134,8 +137,44 @@ class ClientView implements IView extends flash.display.Sprite
 		login.y = (mainScreen.dHeight  - login.height)/2;
 		addChild(login);
 	}
+
 	public function hideLogin():Void
 	{
 		removeChild(login);
 	}
+
+	public function showLevelSelect(mapItems:Map<String,MapData>)
+	{
+		var maps = [];
+		for (m in mapItems)
+		{
+			var map = new flash.display.Sprite();
+			map.name = m.name;
+			var bmp = new flash.display.Bitmap(flash.Assets.getBitmapData("images/"+m.fileName+"-background.jpg"));
+			map.addChild(bmp);
+			for(item in m.itemDatas)
+			{
+				for(p in item.coordinates)
+				{
+					var deco = new flash.display.Bitmap(item.bitmapdata);
+					deco.x = p.x;//+item.regX;
+					deco.y = p.y;//+item.regY;
+					map.addChild(deco);
+				}
+			}
+			maps.push(map);
+		}
+
+		mapSelector = new LevelSelectView(maps,onMapSelected);
+		mapSelector.x = (mainScreen.dWidth - mapSelector.width)/2;
+		mapSelector.y = (mainScreen.dHeight  - mapSelector.height)/2;
+		addChild(mapSelector);
+	}
+
+	public function hideLevelSelect()
+	{
+		removeChild(mapSelector);
+		mapSelector.destroy();
+	}
+
 }

@@ -3,6 +3,8 @@
 -D actuate=1.8.7
 -cp /home/vincent/haxelib/smartfox-haxe-client/git
 -D smartfox-haxe-client=0.2.0
+-cp /home/vincent/haxelib/spritesheet/1,2,0
+-D spritesheet=1,2,0
 -cp /home/vincent/haxelib/haxe-crypto/0,0,7/src
 -D haxe-crypto=0.0.7
 --macro lime.Lib.extraParams()
