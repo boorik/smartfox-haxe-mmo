@@ -46,7 +46,7 @@ class Client
 		
 		sfsHandler = new SFSHandler();
 		sfsHandler.log = view.log;
-		sfsHandler.onReady = onReady;
+		sfsHandler.onRoomJoined = onRoomJoined;
 		sfsHandler.onUserAdded = createPlayer;
 		sfsHandler.onUserRemoved = removeUser;
 		sfsHandler.onUserMoved = moveUser;
@@ -76,7 +76,7 @@ class Client
 				var item = new ItemData();
 				item.bitmapdata = Globals.envBitmapDatas.get(itemKey);
 				item.regX = itemdata.getInt("rx");
-				item.regX = itemdata.getInt("ry");
+				item.regY = itemdata.getInt("ry");
 				var coordsArray = itemdata.getIntArray("coords");
 				item.coordinates = [];
 				for(i in 0...Std.int(coordsArray.length/2))
@@ -103,11 +103,12 @@ class Client
 
 	}
 
-	function onReady()
+	function onRoomJoined(roomName:String)
 	{
 		view.hideLogin();
 
 		trace(sfsHandler.me.getVariables());
+		view.loadMap(roomName);
 		view.init(10,10);
 		sfsHandler.initBuddyList();
 		view.onAvatarClickedCB = onAvatarClicked;

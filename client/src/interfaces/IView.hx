@@ -25,4 +25,5 @@ interface IView
 	function hideLogin():Void;
 	function showLevelSelect(mapItems:Map<String,MapData>):Void;
 	function hideLevelSelect():Void;
+	function loadMap(name:String):Void;
 }

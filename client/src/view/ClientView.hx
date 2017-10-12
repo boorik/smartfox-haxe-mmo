@@ -1,6 +1,7 @@
 package view;
 import interfaces.IView;
 import com.smartfoxserver.v2.entities.Buddy;
+import flash.display.Sprite;
 /**
  * ...
  * @author vincent blanchet
@@ -20,6 +21,7 @@ class ClientView implements IView extends flash.display.Sprite
 	var chatView:view.ChatView;
 	var login:view.LoginView;
 	var mapSelector:LevelSelectView;
+	var maps:Array<Sprite>;
 	
 	public function new() 
 	{
@@ -35,8 +37,6 @@ class ClientView implements IView extends flash.display.Sprite
 		addChild(buddyListView);
 
 		createMe();
-
-		mainScreen.world.addEventListener(flash.events.MouseEvent.CLICK,onMouseClick);
 
 		chatView = new view.ChatView();
 		chatView.onTextInput = onTextInput;
@@ -145,7 +145,7 @@ class ClientView implements IView extends flash.display.Sprite
 
 	public function showLevelSelect(mapItems:Map<String,MapData>)
 	{
-		var maps = [];
+		maps = [];
 		for (m in mapItems)
 		{
 			var map = new flash.display.Sprite();
@@ -157,8 +157,8 @@ class ClientView implements IView extends flash.display.Sprite
 				for(p in item.coordinates)
 				{
 					var deco = new flash.display.Bitmap(item.bitmapdata);
-					deco.x = p.x;//+item.regX;
-					deco.y = p.y;//+item.regY;
+					deco.x = p.x-item.regX;
+					deco.y = p.y-item.regY;
 					map.addChild(deco);
 				}
 			}
@@ -175,6 +175,14 @@ class ClientView implements IView extends flash.display.Sprite
 	{
 		removeChild(mapSelector);
 		mapSelector.destroy();
+	}
+
+	public function loadMap(name:String)
+	{
+		var m = maps.filter(function(s:Sprite){return s.name==name;})[0];
+		m.scaleX = m.scaleY = 1;
+		mainScreen.world = m;
+		mainScreen.world.addEventListener(flash.events.MouseEvent.CLICK,onMouseClick);
 	}
 
 }

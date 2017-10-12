@@ -12,7 +12,7 @@ class MainScreen extends openfl.display.Sprite
 	var origin:flash.geom.Point;
 	var floorMask:flash.display.Bitmap;
 	var tween:motion.actuators.GenericActuator<Dynamic>;
-	public var world:Sprite;
+	public var world(default,set):Sprite;
 	public var dWidth:Float;
 	public var dHeight:Float;
 	public var moveCB:Float->Float->Void;
@@ -75,6 +75,20 @@ class MainScreen extends openfl.display.Sprite
 		addChild(floorMask);
 		world.mask = floorMask;
 		world.addChild(bmp);
+	}
+
+	function set_world(s:Sprite):Sprite
+	{
+		var index = -1;
+		if(contains(world))
+		{
+			index = getChildIndex(world);
+			removeChild(world);
+		}
+		world = s;
+		world.mask = floorMask;
+		addChildAt(world,(index == -1)?numChildren:index);
+		return world;
 	}
 
 	public function moveTo(px:Float,py:Float)

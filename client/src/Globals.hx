@@ -13,33 +13,39 @@ class Globals{
 
         envBitmapDatas = new Map<String,flash.display.BitmapData>();
         var envBmpData = flash.Assets.getBitmapData("images/spritesheet_environment.png");
-        var bush1 = new flash.display.BitmapData(36,39,true,0x00);
+        var bush1 = new flash.display.BitmapData(36,39,false,0x00);
         rect.setTo(2,2,36,39);
+        trace(rect);
         bush1.copyPixels(envBmpData,rect,dest);
         envBitmapDatas.set("bush1",bush1);
 
         var bush4 = new flash.display.BitmapData(46,67,true,0x00);
         rect.setTo(40,2,46,67);
+        trace(rect);
         bush4.copyPixels(envBmpData,rect,dest);
         envBitmapDatas.set("bush4",bush4);
 
-        var door = new flash.display.BitmapData(44,80,true,0x00);
+        var door = new flash.display.BitmapData(44,80,false,0x00);
         rect.setTo(88,2,44,80);
+        trace(rect);
         door.copyPixels(envBmpData,rect,dest);
         envBitmapDatas.set("door",door);
 
         var tree2 = new flash.display.BitmapData(137,143,true,0x00);
         rect.setTo(134,2,137,143);
+        trace(rect);
         tree2.copyPixels(envBmpData,rect,dest);
         envBitmapDatas.set("tree2",tree2);
 
         var tree3 = new flash.display.BitmapData(43,130,true,0x00);
         rect.setTo(273,2,43,130);
+        trace(rect);
         tree3.copyPixels(envBmpData,rect,dest);
         envBitmapDatas.set("tree3",tree3);
 
         var tree4 = new flash.display.BitmapData(142,139,true,0x00);
         rect.setTo(318,2,142,139);
+        trace(rect);
         tree4.copyPixels(envBmpData,rect,dest);
         envBitmapDatas.set("tree4",tree4);
 

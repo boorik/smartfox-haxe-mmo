@@ -25,8 +25,25 @@ class Main extends Sprite
 			cast(c.view,Sprite).y = posY;
 			addChild(cast(c.view,Sprite));
 			posY += Globals.clientHeight;
+
+			
 			//c.init();
 		}
+		/*
+		var posX = 0.;
+		for(bd in Globals.envBitmapDatas)
+		{
+			var bmp = new flash.display.Bitmap(bd);
+			bmp.x = posX;
+			posX += bmp.width;
+			addChild(bmp);
+		}
+
+		var envBmpData = flash.Assets.getBitmapData("images/spritesheet_environment.png");
+		var bmp = new flash.display.Bitmap(envBmpData);
+		bmp.y = 200;
+		addChild(bmp);
+		*/
 	}
 
 	/*

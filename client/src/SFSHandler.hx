@@ -28,7 +28,7 @@ class SFSHandler
 	var sfs:SmartFox;
 	public var onMove:Move->Void;
 	public var onTurn:Int->String->Void;
-	public var onReady:Void->Void;
+	public var onRoomJoined:String->Void;
 	public var onLogin:Array<Room>->Void;
 	//public var onEnd:EndResult->Void;
 	public var currentTurn:String;
@@ -211,7 +211,7 @@ class SFSHandler
 	{
 		log("Room joined:" + e.parameters.room.name);
 		sfs.send(new SetUserPositionRequest(new Vec3D(10,10,0)));
-		onReady();
+		onRoomJoined(e.parameters.room.name);
 
 	}
 	private function onConnection(e:SFSEvent):Void 
