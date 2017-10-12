@@ -71,13 +71,21 @@ class ClientView implements IView extends flash.display.Sprite
 		a.y = y-a.height/2;
 		a.addEventListener(flash.events.MouseEvent.CLICK,onAvatarClick);
 		mainScreen.world.addChild(a);
+		mainScreen.addMapObject(a);
 		avatars.set(id,a);
+
+		mainScreen.arrangeMapObject();
 	}
 
-	public function moveAvatar(id:Int, x:Float, y:Float):Void
+	public function moveAvatar(id:Int, px:Float, py:Float):Void
 	{
+		trace("id:"+id);
 		var a = avatars.get(id);
-		motion.Actuate.tween(a,0.5,{x:x-16,y:y-16},true);
+		if(px != a.x && py!=a.y)
+		{
+			var t = motion.Actuate.tween(a,0.5,{x:px-16,y:py-16});
+			t.onComplete(mainScreen.arrangeMapObject);
+		}
 	}
 
 	public function removeAvatar(id:Int):Void
@@ -86,6 +94,7 @@ class ClientView implements IView extends flash.display.Sprite
 		var a = avatars.get(id);
 		a.removeEventListener(flash.events.MouseEvent.CLICK,onAvatarClick);
 		mainScreen.world.removeChild(a);
+		mainScreen.removeMapObject(a);
 		avatars.remove(id);
 	}
 
@@ -157,9 +166,14 @@ class ClientView implements IView extends flash.display.Sprite
 				for(p in item.coordinates)
 				{
 					var deco = new flash.display.Bitmap(item.bitmapdata);
-					deco.x = p.x-item.regX;
-					deco.y = p.y-item.regY;
-					map.addChild(deco);
+					deco.x = -item.regX;
+					deco.y = -item.regY;
+					var cont = new flash.display.Sprite();
+					cont.mouseEnabled = false;
+					cont.addChild(deco);
+					cont.x = p.x;
+					cont.y = p.y;
+					map.addChild(cont);
 				}
 			}
 			maps.push(map);

@@ -117,7 +117,7 @@ class SFSHandler
 		config.httpPort = 8080;
 		config.useBlueBox = false;
 		#else
-		var config:com.smartfoxserver.v2.SmartFox.ConfigObj = {host:"",port:0,useSSL:false,zone:"",debug:true};
+		var config:com.smartfoxserver.v2.SmartFox.ConfigObj = {host:"",port:0,useSSL:false,zone:"",debug:false};
 		#end
 		//config.debug = true;
 		config.host = "127.0.0.1";
@@ -125,7 +125,7 @@ class SFSHandler
 		config.zone = "SimpleMMOWorld2";
 		#if html5
 		sfs = new com.smartfoxserver.v2.SmartFox(config);
-		sfs.logger.level = 0;
+		//sfs.logger.level = 0;
 		#else
 		sfs = new com.smartfoxserver.v2.SmartFox();
 		#end
@@ -271,7 +271,7 @@ class SFSHandler
 		userVars.push(new SFSUserVariable(USERVAR_Y, y));
 
 		sfs.send(new com.smartfoxserver.v2.requests.SetUserVariablesRequest(userVars));
-		sfs.send(new SetUserPositionRequest(new Vec3D(Math.fround(x),Math.fround(y),0)));
+		sfs.send(new SetUserPositionRequest(new Vec3D(Std.int(x),Std.int(y),0)));
 	}
 
 	public function initBuddyList()

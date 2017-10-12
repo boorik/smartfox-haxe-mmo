@@ -134,7 +134,8 @@ class Client
 
 	function moveUser(u:User,x:Float,y:Float)
 	{
-		view.moveAvatar(u.id,x,y);
+		if(!u.isItMe)
+			view.moveAvatar(u.id,x,y);
 	}
 
 	function displayBuddyList(bl:Array<Buddy>)

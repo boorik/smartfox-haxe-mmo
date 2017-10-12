@@ -13,6 +13,7 @@ class MainScreen extends openfl.display.Sprite
 	var floorMask:flash.display.Bitmap;
 	var tween:motion.actuators.GenericActuator<Dynamic>;
 	public var world(default,set):Sprite;
+	var mapObjects:Array<flash.display.DisplayObject>;
 	public var dWidth:Float;
 	public var dHeight:Float;
 	public var moveCB:Float->Float->Void;
@@ -79,6 +80,7 @@ class MainScreen extends openfl.display.Sprite
 
 	function set_world(s:Sprite):Sprite
 	{
+		mapObjects = [];
 		var index = -1;
 		if(contains(world))
 		{
@@ -88,14 +90,26 @@ class MainScreen extends openfl.display.Sprite
 		world = s;
 		world.mask = floorMask;
 		addChildAt(world,(index == -1)?numChildren:index);
+		var tot = world.numChildren;
+		while(tot>0)
+		{
+			tot--;
+			mapObjects.push(world.getChildAt(tot));
+		}
 		return world;
 	}
 
 	public function moveTo(px:Float,py:Float)
 	{
 		tween = motion.Actuate.tween(world,0.5,{x:(origin.x - px),y:(origin.y - py)},true);
-		tween.onUpdate(moveCB,[origin.x - this.world.x,origin.y - this.world.y]);
+		tween.onUpdate(cbm);
 		tween.onComplete(moveCB,[px,py]);
+	}
+
+	function cbm()
+	{
+		trace("cbm");
+		moveCB(origin.x - this.world.x, origin.y - this.world.y);
 	}
 
 	public function displayAOI(aoiWidth:Int,aoiHeight:Int):Void
@@ -116,6 +130,44 @@ class MainScreen extends openfl.display.Sprite
 		aoi.mouseChildren = false;
 		aoi.mask = floorMask;
 		addChild(aoi);
+	}
+
+	public function arrangeMapObject()
+	{
+		if(mapObjects.length > 1)
+		{
+			mapObjects.sort(function(a,b){
+				if (a.y < b.y)
+					return -1;
+				if (a.y > b.y)
+					return 1;
+
+				return 0;
+			});
+
+			var tot = mapObjects.length;
+			while(tot-->=0)
+			{
+				if(world.getChildIndex(mapObjects[tot])!= tot)
+				{
+					trace("obj coords :"+mapObjects[tot].x+", "+mapObjects[tot].y);
+					world.setChildIndex(mapObjects[tot],tot);
+				}
+			}
+		}
+
+	}
+
+	public function addMapObject(obj:flash.display.DisplayObject)
+	{
+		if(obj == null)
+			throw "obj must not be null";
+		mapObjects.push(obj);
+	}
+
+	public function removeMapObject(obj:flash.display.DisplayObject)
+	{
+		mapObjects.remove(obj);
 	}
 	
 }
