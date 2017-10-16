@@ -12,8 +12,8 @@ class Globals{
         var dest = new flash.geom.Point();
 
         envBitmapDatas = new Map<String,flash.display.BitmapData>();
-        var envBmpData = flash.Assets.getBitmapData("images/spritesheet_environment.png");
-        var bush1 = new flash.display.BitmapData(36,39,false,0x00);
+        var envBmpData = openfl.Assets.getBitmapData("images/spritesheet_environment.png");
+        var bush1 = new flash.display.BitmapData(36,39,true,0x00);
         rect.setTo(2,2,36,39);
         trace(rect);
         bush1.copyPixels(envBmpData,rect,dest);
@@ -25,7 +25,7 @@ class Globals{
         bush4.copyPixels(envBmpData,rect,dest);
         envBitmapDatas.set("bush4",bush4);
 
-        var door = new flash.display.BitmapData(44,80,false,0x00);
+        var door = new flash.display.BitmapData(44,80,true,0x00);
         rect.setTo(88,2,44,80);
         trace(rect);
         door.copyPixels(envBmpData,rect,dest);

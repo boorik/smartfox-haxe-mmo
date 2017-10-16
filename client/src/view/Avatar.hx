@@ -13,9 +13,10 @@ class Avatar extends openfl.display.Sprite
 		
 		this.id = id;
 		
-		graphics.beginFill(Std.random(0xFFFFFF));
-		graphics.drawRect(0, 0, 32, 32);
-		graphics.endFill();
+		var body = new flash.display.Sprite();
+		body.graphics.beginFill(Std.random(0xFFFFFF));
+		body.graphics.drawRect(0, 0, 32, 32);
+		body.graphics.endFill();
 		
 		var nameTF = new flash.text.TextField();
 		nameTF.text = name;
@@ -24,7 +25,11 @@ class Avatar extends openfl.display.Sprite
 		nameTF.wordWrap = true;
 		nameTF.selectable = false;
 		nameTF.mouseEnabled = false;
-		addChild(nameTF);
+		body.addChild(nameTF);
+		
+		body.x = body.y = - body.width/2;
+		
+		addChild(body);
 		
 		//mouseChildren = false;
 		//mouseEnabled = false;

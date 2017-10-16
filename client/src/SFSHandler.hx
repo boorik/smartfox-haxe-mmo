@@ -209,9 +209,11 @@ class SFSHandler
 	
 	private function onRoomJoin(e:SFSEvent):Void 
 	{
-		log("Room joined:" + e.parameters.room.name);
+		trace("toto:" + e.parameters);
+		var r:com.smartfoxserver.v2.entities.Room = e.parameters.room;
+		log("Room joined:" + r.name);
 		sfs.send(new SetUserPositionRequest(new Vec3D(10,10,0)));
-		onRoomJoined(e.parameters.room.name);
+		onRoomJoined(r.name);
 
 	}
 	private function onConnection(e:SFSEvent):Void 
@@ -226,7 +228,7 @@ class SFSHandler
 			sfs.send(new LoginRequest(nick, null, "SimpleMMOWorld2"));
 			#end
 		}else{
-			log("Not connected to internet");
+			log("Unable to connect");
 		}
 	}
 	

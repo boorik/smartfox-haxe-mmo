@@ -14,8 +14,8 @@ interface IView
 	var onMapSelected:String->Void;
 	
 	function log(value:String):Void;
-	function createAvatar(id:Int, name:String, x:Float, y:Float):Void;
-	function moveAvatar(id:Int, x:Float, y:Float):Void;
+	function createAvatar(id:Int, name:String, x:Float, y:Float,isMe:Bool=false):Void;
+	function moveAvatar(id:Int, x:Float, y:Float,isMe:Bool=false):Void;
 	function removeAvatar(id:Int):Void;
 	function init(x:Float,y:Float):Void;
 	function updateBuddyList(ab:Array<com.smartfoxserver.v2.entities.Buddy>):Void;

@@ -70,7 +70,6 @@ class Client
 			var items = [];
 			for(itemKey in setupObj.getKeys() )
 			{
-				trace(itemKey);
 				var itemdata = setupObj.getSFSObject(itemKey);
 				
 				var item = new ItemData();
@@ -105,6 +104,7 @@ class Client
 
 	function onRoomJoined(roomName:String)
 	{
+		trace("roomName:" + roomName);
 		view.hideLogin();
 
 		trace(sfsHandler.me.getVariables());
@@ -114,7 +114,8 @@ class Client
 		view.onAvatarClickedCB = onAvatarClicked;
 		view.onBuddyClickedCB = sfsHandler.removeBuddy;
 		view.onTextInputCB = onTextInput;
-		view.displayAOI(Std.int(sfsHandler.aoi().px),Std.int(sfsHandler.aoi().py));
+		view.displayAOI(Std.int(sfsHandler.aoi().px), Std.int(sfsHandler.aoi().py));
+		view.createAvatar(sfsHandler.me.id, "Me",10, 10,true);
 	}
 	
 	function createPlayer(u:User)

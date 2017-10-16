@@ -11,13 +11,15 @@ class ChatView extends flash.display.Sprite
     {
         super();
 
+		var w = Math.floor(Globals.clientWidth * Globals.gameViewWidthRatio);
+		
         graphics.beginFill(0xFFFFFF,1);
-        graphics.drawRect(0,0,Globals.clientWidth*Globals.gameViewWidthRatio,Globals.clientHeight - Globals.clientHeight*Globals.gameViewHeightRatio);
+        graphics.drawRect(0,0,w,Globals.clientHeight - Globals.clientHeight*Globals.gameViewHeightRatio);
         graphics.endFill();
 
         input = new TextField();
         input.type = flash.text.TextFieldType.INPUT;
-        input.width = this.width;
+        input.width = w;
         input.height = 20;
         input.border = true;
         input.y = height-20;
@@ -25,7 +27,7 @@ class ChatView extends flash.display.Sprite
         addChild(input);
 
         output = new TextField();
-        output.width = this.width;
+        output.width = w;
         output.height = this.height - input.height;
         output.border = true;
         output.wordWrap = true;

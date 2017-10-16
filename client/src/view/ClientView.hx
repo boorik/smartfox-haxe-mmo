@@ -2,6 +2,7 @@ package view;
 import interfaces.IView;
 import com.smartfoxserver.v2.entities.Buddy;
 import flash.display.Sprite;
+import motion.easing.Linear;
 /**
  * ...
  * @author vincent blanchet
@@ -22,6 +23,7 @@ class ClientView implements IView extends flash.display.Sprite
 	var login:view.LoginView;
 	var mapSelector:LevelSelectView;
 	var maps:Array<Sprite>;
+	var me:view.Avatar;
 	
 	public function new() 
 	{
@@ -47,15 +49,19 @@ class ClientView implements IView extends flash.display.Sprite
 	function set_moveCB(value:Float->Float->Void):Float->Float->Void
 	{
 		moveCB = value;
-		mainScreen.moveCB = value;
+		//mainScreen.moveCB = value;
 		return moveCB;
 	}
 	function createMe()
 	{
+		/*
 		var a = new view.Avatar(-1, "me");
 		a.x = (mainScreen.dWidth - a.width)/2;
 		a.y = (mainScreen.dHeight - a.height)/2;
 		mainScreen.addChild(a);
+		*/
+		
+
 	}
 
 	public function log(value:String)
@@ -63,29 +69,50 @@ class ClientView implements IView extends flash.display.Sprite
 		chatView.append(value);
 	}
 
-	public function createAvatar(id:Int, name:String, x:Float, y:Float):Void
+	public function createAvatar(id:Int, name:String, x:Float, y:Float,isMe:Bool=false):Void
 	{
 		//trace("create Avatar at "+x+", "+y);
 		var a = new view.Avatar(id, name);
 		a.x = x-a.width/2;
-		a.y = y-a.height/2;
-		a.addEventListener(flash.events.MouseEvent.CLICK,onAvatarClick);
+		a.y = y - a.height / 2;
+		if (isMe)
+		{
+			a.mouseEnabled = false;
+			a.mouseChildren = false;
+			me = a;
+		}else{
+			a.addEventListener(flash.events.MouseEvent.CLICK, onAvatarClick);
+		}
 		mainScreen.world.addChild(a);
 		mainScreen.addMapObject(a);
-		avatars.set(id,a);
+		avatars.set(id, a);
+		
 
 		mainScreen.arrangeMapObject();
 	}
 
-	public function moveAvatar(id:Int, px:Float, py:Float):Void
+	public function moveAvatar(id:Int, px:Float, py:Float,isMe:Bool=false):Void
 	{
 		trace("id:"+id);
 		var a = avatars.get(id);
 		if(px != a.x && py!=a.y)
 		{
-			var t = motion.Actuate.tween(a,0.5,{x:px-16,y:py-16});
-			t.onComplete(mainScreen.arrangeMapObject);
+			var t = motion.Actuate.tween(a, 0.5, {x:px, y:py}).ease(Linear.easeNone);
+			if (isMe)
+			{
+				t.onUpdate(cbm);
+				t.onComplete(cbm);
+			}else{
+				t.onComplete(mainScreen.arrangeMapObject);
+			}
 		}
+	}
+	
+	function cbm()
+	{
+		moveCB(me.x, me.y);
+		mainScreen.moveTo(me.x, me.y);
+		mainScreen.arrangeMapObject();
 	}
 
 	public function removeAvatar(id:Int):Void
@@ -100,7 +127,9 @@ class ClientView implements IView extends flash.display.Sprite
 
 	function onMouseClick(e:flash.events.MouseEvent)
 	{
-		mainScreen.moveTo(e.localX,e.localY);
+		moveAvatar(me.id, e.localX, e.localY,true);
+		
+		//mainScreen.moveTo(e.localX,e.localY);
 		//moveCB(e.localX,e.localY);
 	}
 
@@ -159,7 +188,7 @@ class ClientView implements IView extends flash.display.Sprite
 		{
 			var map = new flash.display.Sprite();
 			map.name = m.name;
-			var bmp = new flash.display.Bitmap(flash.Assets.getBitmapData("images/"+m.fileName+"-background.jpg"));
+			var bmp = new flash.display.Bitmap(openfl.Assets.getBitmapData("images/"+m.fileName+"-background.jpg"));
 			map.addChild(bmp);
 			for(item in m.itemDatas)
 			{
@@ -193,8 +222,11 @@ class ClientView implements IView extends flash.display.Sprite
 
 	public function loadMap(name:String)
 	{
-		var m = maps.filter(function(s:Sprite){return s.name==name;})[0];
-		m.scaleX = m.scaleY = 1;
+		trace("searched:"+name);
+		var m:Sprite = maps.filter(function(s:Sprite){return s.name == name; })[0];
+		trace("map:" + maps);
+		m.scaleX = 1;
+		m.scaleY = 1;
 		mainScreen.world = m;
 		mainScreen.world.addEventListener(flash.events.MouseEvent.CLICK,onMouseClick);
 	}
