@@ -3,6 +3,8 @@ import interfaces.IView;
 import com.smartfoxserver.v2.entities.Buddy;
 import flash.display.Sprite;
 import motion.easing.Linear;
+
+
 /**
  * ...
  * @author vincent blanchet
@@ -73,8 +75,8 @@ class ClientView implements IView extends flash.display.Sprite
 	{
 		//trace("create Avatar at "+x+", "+y);
 		var a = new view.Avatar(id, name);
-		a.x = x-a.width/2;
-		a.y = y - a.height / 2;
+		a.x = x;
+		a.y = y;
 		if (isMe)
 		{
 			a.mouseEnabled = false;
@@ -93,7 +95,7 @@ class ClientView implements IView extends flash.display.Sprite
 
 	public function moveAvatar(id:Int, px:Float, py:Float,isMe:Bool=false):Void
 	{
-		trace("id:"+id);
+		//trace("id:"+id);
 		var a = avatars.get(id);
 		if(px != a.x && py!=a.y)
 		{
@@ -135,7 +137,7 @@ class ClientView implements IView extends flash.display.Sprite
 
 	function onAvatarClick(e:flash.events.MouseEvent)
 	{
-		onAvatarClickedCB(cast(e.target,Avatar).id);
+		onAvatarClickedCB(cast(cast(e.target,Sprite).parent,Avatar).id);
 	}
 
 	public function init(x:Float,y:Float)

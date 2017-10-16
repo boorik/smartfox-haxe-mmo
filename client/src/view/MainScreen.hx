@@ -31,7 +31,7 @@ class MainScreen extends flash.display.Sprite
 		worldMask.graphics.beginFill(0);
 		worldMask.graphics.drawRect(0, 0, dWidth, dHeight);
 		worldMask.graphics.endFill();
-		//addChild(worldMask);
+		addChild(worldMask);
 		
 		graphics.beginFill(Std.random(0xFFFFFF));
 		graphics.drawRect(0, 0, dWidth, dHeight);
@@ -110,11 +110,12 @@ class MainScreen extends flash.display.Sprite
 			{
 				if(world.getChildIndex(mapObjects[tot])!= tot)
 				{
-					trace("obj coords :"+mapObjects[tot].x+", "+mapObjects[tot].y);
+					//trace("obj coords :"+mapObjects[tot].x+", "+mapObjects[tot].y);
 					world.setChildIndex(mapObjects[tot],tot);
 				}
 			}
 		}
+		//trace(world.x + ", " + world.y+" "+world.width+"x"+world.height);
 
 	}
 

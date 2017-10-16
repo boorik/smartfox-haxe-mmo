@@ -147,7 +147,9 @@ class Client
 
 	function onAvatarClicked(id:Int)
 	{
-		sfsHandler.addBuddy(players.get(id).user);
+		var target = players.get(id).user;
+		trace(target);
+		sfsHandler.addBuddy(target);
 	}
 
 	function displayPublicMsg(u:User,msg:String)

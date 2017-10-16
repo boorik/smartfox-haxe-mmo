@@ -267,7 +267,7 @@ class SFSHandler
 
 	public function sendPosition(x:Float,y:Float)
 	{
-		trace("pos:"+x+", "+y);
+		//trace("pos:"+x+", "+y);
 		var userVars:Array<UserVariable> = [];
 		userVars.push(new SFSUserVariable(USERVAR_X, x));
 		userVars.push(new SFSUserVariable(USERVAR_Y, y));
