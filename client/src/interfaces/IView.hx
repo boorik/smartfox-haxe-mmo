@@ -6,7 +6,7 @@ import com.smartfoxserver.v2.entities.Buddy;
  */
 interface IView 
 {
-	var moveCB(default,set):Float->Float->Void;
+	var moveCB(default,set):Float->Float->String->Void;
 	var onAvatarClickedCB:Int->Void;
 	var onBuddyClickedCB:Buddy->Void;
 	var onTextInputCB:String->Void;
@@ -15,7 +15,7 @@ interface IView
 	
 	function log(value:String):Void;
 	function createAvatar(id:Int, name:String, x:Float, y:Float,isMe:Bool=false):Void;
-	function moveAvatar(id:Int, x:Float, y:Float,isMe:Bool=false):Void;
+	function moveAvatar(id:Int, x:Float, y:Float,dir:String,isMe:Bool=false):Void;
 	function removeAvatar(id:Int):Void;
 	function init(x:Float,y:Float):Void;
 	function updateBuddyList(ab:Array<com.smartfoxserver.v2.entities.Buddy>):Void;

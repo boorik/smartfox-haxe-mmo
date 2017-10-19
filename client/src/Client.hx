@@ -133,10 +133,10 @@ class Client
 
 	}
 
-	function moveUser(u:User,x:Float,y:Float)
+	function moveUser(u:User,x:Float,y:Float,dir:String)
 	{
 		if(!u.isItMe)
-			view.moveAvatar(u.id,x,y);
+			view.moveAvatar(u.id,x,y,dir);
 	}
 
 	function displayBuddyList(bl:Array<Buddy>)

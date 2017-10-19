@@ -38,7 +38,7 @@ class SFSHandler
 	
 	public var onUserAdded:User->Void;
 	public var onUserRemoved:User->Void;
-	public var onUserMoved:User->Float->Float->Void;
+	public var onUserMoved:User->Float->Float->String->Void;
 	public var onItemAdded:MMOItem->Void;
 	public var onItemRemoved:MMOItem->Void;
 	public var onBuddyList:Array<Buddy>->Void;
@@ -46,6 +46,7 @@ class SFSHandler
 
 	static inline var USERVAR_X = "x";
 	static inline var USERVAR_Y = "y";
+	static inline var USERVAR_DIR = "dir";
 
 	public function new() 
 	{
@@ -165,9 +166,9 @@ class SFSHandler
 		{
 			var px = user.getVariable(USERVAR_X).getDoubleValue();
 			var py = user.getVariable(USERVAR_Y).getDoubleValue();
-
+			var dir = user.getVariable(USERVAR_DIR).getStringValue();
 			// Move the user avatar
-			onUserMoved(user,px,py);
+			onUserMoved(user,px,py,dir);
 		}
 	}
 	
@@ -265,12 +266,13 @@ class SFSHandler
 		return r.defaultAOI;
 	}
 
-	public function sendPosition(x:Float,y:Float)
+	public function sendPosition(x:Float,y:Float,dir:String)
 	{
 		//trace("pos:"+x+", "+y);
 		var userVars:Array<UserVariable> = [];
 		userVars.push(new SFSUserVariable(USERVAR_X, x));
 		userVars.push(new SFSUserVariable(USERVAR_Y, y));
+		userVars.push(new SFSUserVariable(USERVAR_DIR, dir));
 
 		sfs.send(new com.smartfoxserver.v2.requests.SetUserVariablesRequest(userVars));
 		sfs.send(new SetUserPositionRequest(new Vec3D(Std.int(x),Std.int(y),0)));

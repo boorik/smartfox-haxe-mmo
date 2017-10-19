@@ -13,7 +13,7 @@ class ClientView implements IView extends flash.display.Sprite
 {
 	public var mainScreen:view.MainScreen;
 
-	public var moveCB(default,set):Float->Float->Void;
+	public var moveCB(default,set):Float->Float->String->Void;
 	public var onAvatarClickedCB:Int->Void;
 	public var onBuddyClickedCB:Buddy->Void;
 	public var onTextInputCB:String->Void;
@@ -48,7 +48,7 @@ class ClientView implements IView extends flash.display.Sprite
 		addChild(chatView);
 	}
 
-	function set_moveCB(value:Float->Float->Void):Float->Float->Void
+	function set_moveCB(value:Float->Float->String->Void):Float->Float->String->Void
 	{
 		moveCB = value;
 		//mainScreen.moveCB = value;
@@ -93,26 +93,37 @@ class ClientView implements IView extends flash.display.Sprite
 		mainScreen.arrangeMapObject();
 	}
 
-	public function moveAvatar(id:Int, px:Float, py:Float,isMe:Bool=false):Void
+	public function moveAvatar(id:Int, px:Float, py:Float,dir:String,isMe:Bool=false):Void
 	{
 		//trace("id:"+id);
 		var a = avatars.get(id);
+		a.dir = dir;
+		a.body.showBehavior("avatar"+dir);
+
 		if(px != a.x && py!=a.y)
 		{
-			var t = motion.Actuate.tween(a, 0.5, {x:px, y:py}).ease(Linear.easeNone);
+
+			// Calculate animation duration
+			// (we want the avatar to move at a constant speed)
+			var dx = px - a.x;
+			var dy = py - a.y;
+			var dist = Math.round(Math.sqrt(Math.pow(dx, 2) + Math.pow(dy, 2)));
+
+			var duration = dist / a.speed;
+			var t = motion.Actuate.tween(a, duration, {x:px, y:py}).ease(Linear.easeNone);
 			if (isMe)
 			{
 				t.onUpdate(cbm);
-				t.onComplete(cbm);
+				t.onComplete(function(){cbm();a.body.showBehavior("avatarStand");});
 			}else{
-				t.onComplete(mainScreen.arrangeMapObject);
+				t.onComplete(function(){mainScreen.arrangeMapObject();a.body.showBehavior("avatarStand");});
 			}
 		}
 	}
 	
 	function cbm()
 	{
-		moveCB(me.x, me.y);
+		moveCB(me.x, me.y,me.dir);
 		mainScreen.moveTo(me.x, me.y);
 		mainScreen.arrangeMapObject();
 	}
@@ -129,7 +140,29 @@ class ClientView implements IView extends flash.display.Sprite
 
 	function onMouseClick(e:flash.events.MouseEvent)
 	{
-		moveAvatar(me.id, e.localX, e.localY,true);
+		var destX = e.localX;
+		var destY = e.localY;
+
+		// Evaluate avatar movement direction
+		var dx = destX - me.x;
+		var dy = destY - me.y;
+
+		var angle = Math.atan(dy / dx);
+
+		var deg = Math.round(angle * 180 / Math.PI);
+		if(dx < 0)
+			deg += 180;
+		else if(dx >= 0 && dy < 0)
+			deg += 360;
+
+		var dirIndex = Math.round(deg / 45);
+		if (dirIndex >= Globals.AVATAR_DIRECTIONS.length)
+			dirIndex -= Globals.AVATAR_DIRECTIONS.length;
+
+		var dir = Globals.AVATAR_DIRECTIONS[dirIndex];
+
+
+		moveAvatar(me.id, e.localX, e.localY,dir,true);
 		
 		//mainScreen.moveTo(e.localX,e.localY);
 		//moveCB(e.localX,e.localY);

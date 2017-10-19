@@ -6,6 +6,10 @@ class Globals{
 
     public static var envBitmapDatas:Map<String,flash.display.BitmapData>;
 
+    public static var avatarSpriteSheet:spritesheet.Spritesheet;
+
+    public static var AVATAR_DIRECTIONS = ["E", "SE", "S", "SW", "W", "NW", "N", "NE"];
+
     static public function initSpriteSheets()
     {
         var rect = new flash.geom.Rectangle();
@@ -43,5 +47,17 @@ class Globals{
         tree4.copyPixels(envBmpData,rect,dest);
         envBitmapDatas.set("tree4",tree4);
 
+        //Avatar
+        var avatarBmp = openfl.Assets.getBitmapData("images/spritesheet_avatar.png");
+        avatarSpriteSheet = spritesheet.importers.BitmapImporter.create(avatarBmp,56,3,30,68);
+        avatarSpriteSheet.addBehavior(new spritesheet.data.BehaviorData("avatarE",[for(i in 0...20)i],true,30));
+        avatarSpriteSheet.addBehavior(new spritesheet.data.BehaviorData("avatarN",[for(i in 20...39)i],true,30));
+        avatarSpriteSheet.addBehavior(new spritesheet.data.BehaviorData("avatarNE",[for(i in 39...59)i],true,30));
+        avatarSpriteSheet.addBehavior(new spritesheet.data.BehaviorData("avatarNW",[for(i in 59...79)i],true,30));
+        avatarSpriteSheet.addBehavior(new spritesheet.data.BehaviorData("avatarS",[for(i in 79...98)i],true,30));
+        avatarSpriteSheet.addBehavior(new spritesheet.data.BehaviorData("avatarSE",[for(i in 98...118)i],true,30));
+        avatarSpriteSheet.addBehavior(new spritesheet.data.BehaviorData("avatarSW",[for(i in 118...138)i],true,30));
+        avatarSpriteSheet.addBehavior(new spritesheet.data.BehaviorData("avatarW",[for(i in 138...158)i],true,30));
+        avatarSpriteSheet.addBehavior(new spritesheet.data.BehaviorData("avatarStand",[79],false,30));
     }
 }
