@@ -21,6 +21,7 @@ class BuddyListView extends flash.display.Sprite
 		label.defaultTextFormat.align = openfl.text.TextFormatAlign.CENTER;
 		label.text = "Buddies";
 		label.x = (this.width - label.width) / 2;
+        label.height = 25;
 		addChild(label);
     }
 
@@ -41,7 +42,7 @@ class BuddyListView extends flash.display.Sprite
 
     public function clean()
     {
-        while(this.numChildren > 0)
+        while(this.numChildren > 1)
         {
             var bv:BuddyView = cast getChildAt(0);
             bv.addEventListener(MouseEvent.CLICK,onMouseClick);

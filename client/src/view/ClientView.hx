@@ -40,7 +40,7 @@ class ClientView implements IView extends flash.display.Sprite
 		buddyListView.x = Globals.clientWidth*Globals.gameViewWidthRatio;
 		addChild(buddyListView);
 
-		createMe();
+		//createMe();
 
 		chatView = new view.ChatView();
 		chatView.onTextInput = onTextInput;
@@ -137,7 +137,10 @@ class ClientView implements IView extends flash.display.Sprite
 
 	function onAvatarClick(e:flash.events.MouseEvent)
 	{
+		trace("avatar clicked");
 		onAvatarClickedCB(cast(cast(e.target,Sprite).parent,Avatar).id);
+		e.stopImmediatePropagation();
+
 	}
 
 	public function init(x:Float,y:Float)

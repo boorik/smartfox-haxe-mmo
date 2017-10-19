@@ -278,14 +278,23 @@ class SFSHandler
 
 	public function initBuddyList()
 	{
+		trace("sending init buddy request");
 		sfs.addEventListener(SFSBuddyEvent.BUDDY_ADD,onBuddyListInitialized);
 		sfs.addEventListener(SFSBuddyEvent.BUDDY_REMOVE,onBuddyListInitialized);
 		sfs.addEventListener(SFSBuddyEvent.BUDDY_LIST_INIT,onBuddyListInitialized);
+		sfs.addEventListener(SFSBuddyEvent.BUDDY_ERROR,onBuddyListError);
 		sfs.send(new com.smartfoxserver.v2.requests.buddylist.InitBuddyListRequest());
 	}
 
+	function onBuddyListError(e:SFSBuddyEvent)
+	{
+		trace(e);
+	}
+
+
 	function onBuddyListInitialized(e:SFSBuddyEvent)
 	{
+		trace("Buddy list inited");
 		var buddies:Array<Buddy> = sfs.buddyManager.buddyList;
 
 		onBuddyList(buddies);
@@ -294,6 +303,7 @@ class SFSHandler
 
 	public function addBuddy(u:User)
 	{
+		trace("user name:"+u.name);
 		if(!sfs.buddyManager.containsBuddy(u.name))
 			sfs.send(new com.smartfoxserver.v2.requests.buddylist.AddBuddyRequest(u.name));
 	}
