@@ -16,6 +16,7 @@ class Avatar extends openfl.display.Sprite
 		super();
 		
 		this.id = id;
+		lastTime = openfl.Lib.getTimer();
 		
 		body = new spritesheet.AnimatedSprite(Globals.avatarSpriteSheet,true);
 		body.x = -15;
