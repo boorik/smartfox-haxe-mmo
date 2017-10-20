@@ -206,9 +206,12 @@ class ClientView implements IView extends flash.display.Sprite
 		onTextInputCB(t);
 	}
 
-	public function displayPublicMessage(msg:String)
+	public function displayPublicMessage(id:Int,name:String,msg:String)
 	{
-		chatView.append(msg);
+		var a = avatars.get(id);
+		if(a != null)
+			a.say(msg);
+		chatView.append(name+" : "+msg);
 	}
 
 	public function displayAOI(width:Int,height:Int)

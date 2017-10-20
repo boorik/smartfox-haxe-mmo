@@ -23,7 +23,7 @@ class Main extends Sprite
 
 		clients = [];
 		var posY = 0.0;
-		var numClient = 1;
+		var numClient = 2;
 		Globals.clientHeight = stage.stageHeight/numClient;
 		for(i in 0...numClient)
 		{

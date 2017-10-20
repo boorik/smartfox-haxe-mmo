@@ -12,6 +12,8 @@ class Globals{
 
     public static var barrelBitmapDatas:Map<String,flash.display.BitmapData>;
 
+    public static var balloonBitmapDatas:Map<String,flash.display.BitmapData>;
+
     static public function initSpriteSheets()
     {
         var rect = new flash.geom.Rectangle();
@@ -75,5 +77,25 @@ class Globals{
         rect.setTo(52,0,52,58);
         openState.copyPixels(barrelBmpData,rect,dest);
         barrelBitmapDatas.set("openState",openState);
+
+        //Balloon
+        balloonBitmapDatas=new Map<String,flash.display.BitmapData>();
+        var bBmp = openfl.Assets.getBitmapData("images/spritesheet_balloon.png");
+
+        var bottom = new flash.display.BitmapData(100,25,true,0x00);
+        rect.setTo(0,0,100,25);
+        bottom.copyPixels(bBmp,rect,dest);
+        balloonBitmapDatas.set("bottom",bottom);
+
+        var middle = new flash.display.BitmapData(100,10,true,0x00);
+        rect.setTo(0,25,100,10);
+        middle.copyPixels(bBmp,rect,dest);
+        balloonBitmapDatas.set("middle",middle);
+
+        var top = new flash.display.BitmapData(100,10,true,0x00);
+        rect.setTo(0,35,100,10);
+        top.copyPixels(bBmp,rect,dest);
+        balloonBitmapDatas.set("top",top);
+
     }
 }

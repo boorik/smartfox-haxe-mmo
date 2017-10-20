@@ -174,7 +174,7 @@ class Client
 
 	function displayPublicMsg(u:User,msg:String)
 	{
-		view.displayPublicMessage(u.name+" : "+msg);
+		view.displayPublicMessage(u.id, (u.isItMe? "ME" :u.name), msg);
 	}
 
 	function onTextInput(msg:String)

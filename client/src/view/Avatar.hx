@@ -11,6 +11,9 @@ class Avatar extends openfl.display.Sprite
 	public var speed = 100;
 	public var dir:String;
 	var lastTime:Float;
+	var balloon:view.Balloon;
+	var timer:Float;
+
 	public function new(id:Int,name:String) 
 	{
 		super();
@@ -28,13 +31,26 @@ class Avatar extends openfl.display.Sprite
 		nameTF.autoSize = flash.text.TextFieldAutoSize.CENTER;
 		nameTF.text = name;
 		nameTF.x = - nameTF.width / 2;
-		nameTF.y = - 36 - nameTF.height;
+		nameTF.y = - 30 - nameTF.height;
 		nameTF.selectable = false;
 		nameTF.mouseEnabled = false;
 		addChild(nameTF);
 
+		balloon = new view.Balloon();
+		balloon.y = nameTF.y + 10;
+		balloon.visible = false;
+		addChild(balloon);
+
 		body.showBehavior("avatarStand");
 		addEventListener(flash.events.Event.ENTER_FRAME, onEnterFrame);
+	}
+
+	public function say(txt:String)
+	{
+		balloon.updateText(txt);
+		balloon.visible = true;
+		timer = 2.;
+
 	}
 
 	function onEnterFrame(e:flash.events.Event)
@@ -43,6 +59,12 @@ class Avatar extends openfl.display.Sprite
  		var delta = time - lastTime;
 		body.update(cast delta);	
 		lastTime = time;
+		if(balloon.visible)
+		{
+			timer -= 0.01;
+			if(timer<=0)
+				balloon.visible = false;	
+		}
 	}
 	
 }

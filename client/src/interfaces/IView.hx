@@ -20,7 +20,7 @@ interface IView
 	function removeAvatar(id:Int):Void;
 	function init(x:Float,y:Float):Void;
 	function updateBuddyList(ab:Array<com.smartfoxserver.v2.entities.Buddy>):Void;
-	function displayPublicMessage(msg:String):Void;
+	function displayPublicMessage(id:Int,name:String,msg:String):Void;
 	function displayAOI(width:Int,height:Int):Void;
 	function showLogin(name:String,cb:String->Void):Void;
 	function hideLogin():Void;
