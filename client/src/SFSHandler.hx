@@ -26,11 +26,12 @@ class SFSHandler
 {
 	var nick:String;
 	var sfs:SmartFox;
+
 	public var onMove:Move->Void;
 	public var onTurn:Int->String->Void;
 	public var onRoomJoined:String->Void;
 	public var onLogin:Array<Room>->Void;
-	//public var onEnd:EndResult->Void;
+
 	public var currentTurn:String;
 	public var currentTurnId:Int;
 	public var me(get, null):com.smartfoxserver.v2.entities.SFSUser;
@@ -189,6 +190,14 @@ class SFSHandler
 			for(u in ru)
 				onUserRemoved(u);
 		}
+		var removedItems:Array<MMOItem> = e.parameters.removedItems;
+		if(removedItems.length >0)
+		{
+			for(i in removedItems)
+			{
+				onItemRemoved(i);
+			}
+		}
 		var addedItems:Array<MMOItem> = e.parameters.addedItems;
 		if(addedItems.length >0)
 		{
@@ -344,5 +353,12 @@ class SFSHandler
 		{
 			sfs.send(new com.smartfoxserver.v2.requests.PrivateMessageRequest(msg,u.id));
 		}
+	}
+
+	public function itemClicked(id:Int)
+	{
+		var params = new SFSObject();
+		params.putInt("id",id);
+		sfs.send(new ExtensionRequest("barrelClick",params,sfs.lastJoinedRoom));
 	}
 }

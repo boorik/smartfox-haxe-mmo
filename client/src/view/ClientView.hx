@@ -21,6 +21,7 @@ class ClientView implements IView extends flash.display.Sprite
 	public var onMapSelected:String->Void;
 
 	var avatars:Map<Int,Avatar>;
+	var items:Map<Int,Barrel>;
 	var buddyListView:view.BuddyListView;
 	var chatView:view.ChatView;
 	var login:view.LoginView;
@@ -33,6 +34,7 @@ class ClientView implements IView extends flash.display.Sprite
 		super();
 
 		avatars = new Map<Int,Avatar>();
+		items = new Map<Int,Barrel>();
 		mainScreen = new view.MainScreen();
 		addChild(mainScreen);
 
@@ -64,9 +66,16 @@ class ClientView implements IView extends flash.display.Sprite
 		var item = new view.Barrel(id,isOpen,onItemClickedCB);
 		item.x = x;
 		item.y = y;
-
+		items.set(id,item);
 		mainScreen.addMapObject(item);
 
+	}
+
+	public function removeItem(id:Int)
+	{
+		var item = items.get(id);
+		mainScreen.removeMapObject(item);
+		item.destroy();
 	}
 
 	public function createAvatar(id:Int, name:String, x:Float, y:Float,isMe:Bool=false):Void

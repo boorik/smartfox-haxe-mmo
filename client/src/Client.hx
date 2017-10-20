@@ -54,6 +54,8 @@ class Client
 		sfsHandler.onPublicMessage = displayPublicMsg;
 		sfsHandler.onLogin = onLogin;
 		sfsHandler.onItemAdded = createItem;
+		sfsHandler.onItemRemoved = removeItem;
+		
 		sfsHandler.connect(name);
 
 		view.moveCB = sfsHandler.sendPosition;
@@ -115,7 +117,7 @@ class Client
 		view.onAvatarClickedCB = onAvatarClicked;
 		view.onBuddyClickedCB = sfsHandler.removeBuddy;
 		view.onTextInputCB = onTextInput;
-		view.onItemClickedCB = onItemClick;
+		view.onItemClickedCB = sfsHandler.itemClicked;
 		view.displayAOI(Std.int(sfsHandler.aoi().px), Std.int(sfsHandler.aoi().py));
 		view.createAvatar(sfsHandler.me.id, "Me",10, 10,true);
 	}
@@ -180,6 +182,11 @@ class Client
 		}else{
 			sfsHandler.sendPublic(msg);
 		}
+	}
+
+	function removeItem(i:com.smartfoxserver.v2.entities.MMOItem)
+	{
+		view.removeItem(cast i.id);
 	}
 	
 }
