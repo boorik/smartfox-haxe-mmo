@@ -39,7 +39,7 @@ class SFSHandler
 	public var onUserAdded:User->Void;
 	public var onUserRemoved:User->Void;
 	public var onUserMoved:User->Float->Float->String->Void;
-	public var onItemAdded:MMOItem->Void;
+	public var onItemAdded:MMOItem->Bool->Void;
 	public var onItemRemoved:MMOItem->Void;
 	public var onBuddyList:Array<Buddy>->Void;
 	public var onPublicMessage:User->String->Void;
@@ -47,6 +47,7 @@ class SFSHandler
 	static inline var USERVAR_X = "x";
 	static inline var USERVAR_Y = "y";
 	static inline var USERVAR_DIR = "dir";
+	static inline var MMOITEMVAR_OPEN = "open";
 
 	public function new() 
 	{
@@ -187,6 +188,15 @@ class SFSHandler
 		{
 			for(u in ru)
 				onUserRemoved(u);
+		}
+		var addedItems:Array<MMOItem> = e.parameters.addedItems;
+		if(addedItems.length >0)
+		{
+			for(i in addedItems)
+			{
+				trace("item in AOI :"+i);
+				onItemAdded(i,i.getVariable(MMOITEMVAR_OPEN).getBoolValue());
+			}
 		}
 	}
 	

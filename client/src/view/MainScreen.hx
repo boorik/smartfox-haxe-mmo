@@ -124,11 +124,13 @@ class MainScreen extends flash.display.Sprite
 		if(obj == null)
 			throw "obj must not be null";
 		mapObjects.push(obj);
+		world.addChild(obj);
 	}
 
 	public function removeMapObject(obj:flash.display.DisplayObject)
 	{
 		mapObjects.remove(obj);
+		world.removeChild(obj);
 	}
 	
 }

@@ -8,6 +8,7 @@ interface IView
 {
 	var moveCB(default,set):Float->Float->String->Void;
 	var onAvatarClickedCB:Int->Void;
+	var onItemClickedCB:Int->Void;
 	var onBuddyClickedCB:Buddy->Void;
 	var onTextInputCB:String->Void;
 	var mainScreen:view.MainScreen;
@@ -26,4 +27,5 @@ interface IView
 	function showLevelSelect(mapItems:Map<String,MapData>):Void;
 	function hideLevelSelect():Void;
 	function loadMap(name:String):Void;
+	function createItem(id:Int, name:String, x:Float, y:Float,isOpen:Bool):Void;
 }

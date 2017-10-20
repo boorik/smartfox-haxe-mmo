@@ -15,6 +15,7 @@ class ClientView implements IView extends flash.display.Sprite
 
 	public var moveCB(default,set):Float->Float->String->Void;
 	public var onAvatarClickedCB:Int->Void;
+	public var onItemClickedCB:Int->Void;
 	public var onBuddyClickedCB:Buddy->Void;
 	public var onTextInputCB:String->Void;
 	public var onMapSelected:String->Void;
@@ -40,8 +41,6 @@ class ClientView implements IView extends flash.display.Sprite
 		buddyListView.x = Globals.clientWidth*Globals.gameViewWidthRatio;
 		addChild(buddyListView);
 
-		//createMe();
-
 		chatView = new view.ChatView();
 		chatView.onTextInput = onTextInput;
 		chatView.y = mainScreen.dHeight;
@@ -54,21 +53,20 @@ class ClientView implements IView extends flash.display.Sprite
 		//mainScreen.moveCB = value;
 		return moveCB;
 	}
-	function createMe()
-	{
-		/*
-		var a = new view.Avatar(-1, "me");
-		a.x = (mainScreen.dWidth - a.width)/2;
-		a.y = (mainScreen.dHeight - a.height)/2;
-		mainScreen.addChild(a);
-		*/
-		
-
-	}
 
 	public function log(value:String)
 	{
 		chatView.append(value);
+	}
+
+	public function createItem(id:Int, name:String, x:Float, y:Float,isOpen:Bool):Void
+	{
+		var item = new view.Barrel(id,isOpen,onItemClickedCB);
+		item.x = x;
+		item.y = y;
+
+		mainScreen.addMapObject(item);
+
 	}
 
 	public function createAvatar(id:Int, name:String, x:Float, y:Float,isMe:Bool=false):Void
@@ -85,7 +83,6 @@ class ClientView implements IView extends flash.display.Sprite
 		}else{
 			a.addEventListener(flash.events.MouseEvent.CLICK, onAvatarClick);
 		}
-		mainScreen.world.addChild(a);
 		mainScreen.addMapObject(a);
 		avatars.set(id, a);
 		
@@ -121,6 +118,9 @@ class ClientView implements IView extends flash.display.Sprite
 		}
 	}
 	
+	/**
+	* Callback after each animation frame 
+	**/
 	function cbm()
 	{
 		moveCB(me.x, me.y,me.dir);
@@ -133,7 +133,6 @@ class ClientView implements IView extends flash.display.Sprite
 		trace("removeAvatar "+id);
 		var a = avatars.get(id);
 		a.removeEventListener(flash.events.MouseEvent.CLICK,onAvatarClick);
-		mainScreen.world.removeChild(a);
 		mainScreen.removeMapObject(a);
 		avatars.remove(id);
 	}

@@ -53,6 +53,7 @@ class Client
 		sfsHandler.onBuddyList = displayBuddyList;
 		sfsHandler.onPublicMessage = displayPublicMsg;
 		sfsHandler.onLogin = onLogin;
+		sfsHandler.onItemAdded = createItem;
 		sfsHandler.connect(name);
 
 		view.moveCB = sfsHandler.sendPosition;
@@ -114,8 +115,14 @@ class Client
 		view.onAvatarClickedCB = onAvatarClicked;
 		view.onBuddyClickedCB = sfsHandler.removeBuddy;
 		view.onTextInputCB = onTextInput;
+		view.onItemClickedCB = onItemClick;
 		view.displayAOI(Std.int(sfsHandler.aoi().px), Std.int(sfsHandler.aoi().py));
 		view.createAvatar(sfsHandler.me.id, "Me",10, 10,true);
+	}
+
+	function onItemClick(id:Int)
+	{
+		trace("item clicked:"+id);
 	}
 	
 	function createPlayer(u:User)
@@ -124,6 +131,11 @@ class Client
 		p.user = u;
 		players.set(u.id,p);
 		haxe.Timer.measure(view.createAvatar.bind(u.id, u.name, u.aoiEntryPoint.px, u.aoiEntryPoint.py));
+	}
+
+	function createItem(i:com.smartfoxserver.v2.entities.MMOItem,isOpen:Bool)
+	{
+		view.createItem(cast i.id,"barrel_"+i.id,i.aoiEntryPoint.px,i.aoiEntryPoint.py,isOpen);
 	}
 
 	function removeUser(u:User)

@@ -10,6 +10,8 @@ class Globals{
 
     public static var AVATAR_DIRECTIONS = ["E", "SE", "S", "SW", "W", "NW", "N", "NE"];
 
+    public static var barrelBitmapDatas:Map<String,flash.display.BitmapData>;
+
     static public function initSpriteSheets()
     {
         var rect = new flash.geom.Rectangle();
@@ -59,5 +61,19 @@ class Globals{
         avatarSpriteSheet.addBehavior(new spritesheet.data.BehaviorData("avatarSW",[for(i in 118...138)i],true,30));
         avatarSpriteSheet.addBehavior(new spritesheet.data.BehaviorData("avatarW",[for(i in 138...158)i],true,30));
         avatarSpriteSheet.addBehavior(new spritesheet.data.BehaviorData("avatarStand",[79],false,30));
+
+        //Barrel
+        var barrelBmpData = openfl.Assets.getBitmapData("images/spritesheet_items.png");
+        barrelBitmapDatas = new Map<String,flash.display.BitmapData>();
+
+        var closeState = new flash.display.BitmapData(52,58,true,0x00);
+        rect.setTo(0,0,52,58);
+        closeState.copyPixels(barrelBmpData,rect,dest);
+        barrelBitmapDatas.set("closeState",closeState);
+
+        var openState = new flash.display.BitmapData(52,58,true,0x00);
+        rect.setTo(52,0,52,58);
+        openState.copyPixels(barrelBmpData,rect,dest);
+        barrelBitmapDatas.set("openState",openState);
     }
 }
