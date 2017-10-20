@@ -17,7 +17,7 @@ class Avatar extends openfl.display.Sprite
 		
 		this.id = id;
 		lastTime = openfl.Lib.getTimer();
-		
+
 		body = new spritesheet.AnimatedSprite(Globals.avatarSpriteSheet,true);
 		body.x = -15;
 		body.y = -36;
@@ -29,16 +29,12 @@ class Avatar extends openfl.display.Sprite
 		nameTF.text = name;
 		nameTF.x = - nameTF.width / 2;
 		nameTF.y = - 36 - nameTF.height;
-		//nameTF.wordWrap = true;
 		nameTF.selectable = false;
 		nameTF.mouseEnabled = false;
 		addChild(nameTF);
 
 		body.showBehavior("avatarStand");
 		addEventListener(flash.events.Event.ENTER_FRAME, onEnterFrame);
-		
-		//mouseChildren = false;
-		//mouseEnabled = false;
 	}
 
 	function onEnterFrame(e:flash.events.Event)

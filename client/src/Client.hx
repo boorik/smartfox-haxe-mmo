@@ -50,7 +50,9 @@ class Client
 		sfsHandler.onUserAdded = createPlayer;
 		sfsHandler.onUserRemoved = removeUser;
 		sfsHandler.onUserMoved = moveUser;
+		#if !noBuddyList
 		sfsHandler.onBuddyList = displayBuddyList;
+		#end
 		sfsHandler.onPublicMessage = displayPublicMsg;
 		sfsHandler.onLogin = onLogin;
 		sfsHandler.onItemAdded = createItem;
@@ -113,7 +115,11 @@ class Client
 		trace(sfsHandler.me.getVariables());
 		view.loadMap(roomName);
 		view.init(10,10);
+
+		#if !noBuddyList
 		sfsHandler.initBuddyList();
+		#end
+
 		view.onAvatarClickedCB = onAvatarClicked;
 		view.onBuddyClickedCB = sfsHandler.removeBuddy;
 		view.onTextInputCB = onTextInput;

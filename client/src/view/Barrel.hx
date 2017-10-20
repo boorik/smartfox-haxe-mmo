@@ -23,6 +23,8 @@ class Barrel extends flash.display.Sprite
         if(!isOpen)
         {
             state = CLOSE;
+            buttonMode = true;
+            useHandCursor = true;
             addEventListener(flash.events.MouseEvent.CLICK,onClick);
         }
         body.x = -18;

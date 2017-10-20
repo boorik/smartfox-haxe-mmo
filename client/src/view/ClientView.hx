@@ -1,9 +1,9 @@
 package view;
+
 import interfaces.IView;
 import com.smartfoxserver.v2.entities.Buddy;
 import flash.display.Sprite;
 import motion.easing.Linear;
-
 
 /**
  * ...
@@ -38,10 +38,12 @@ class ClientView implements IView extends flash.display.Sprite
 		mainScreen = new view.MainScreen();
 		addChild(mainScreen);
 
+		#if !noBuddyList
 		buddyListView = new view.BuddyListView();
 		buddyListView.onBuddyClicked = onBuddyClicked;
 		buddyListView.x = Globals.clientWidth*Globals.gameViewWidthRatio;
 		addChild(buddyListView);
+		#end
 
 		chatView = new view.ChatView();
 		chatView.onTextInput = onTextInput;
