@@ -218,8 +218,18 @@ class SFSHandler
 	{
 		log("Logged as "+me.name);
 		onLogin(sfs.roomList);
-		
-		//play();
+		var exp = new com.smartfoxserver.v2.entities.match.MatchExpression(
+			com.smartfoxserver.v2.entities.match.RoomProperties.USER_COUNT,
+			com.smartfoxserver.v2.entities.match.NumberMatch.GREATER_THAN,
+			0);
+		trace(exp.toString());
+		sfs.addEventListener(SFSEvent.ROOM_FIND_RESULT,onRoomFound);
+		sfs.send(new com.smartfoxserver.v2.requests.FindRoomsRequest(exp));
+	}
+
+	function onRoomFound(e:SFSEvent)
+	{
+		trace("rooms:"+e.parameters.rooms);
 	}
 
 	public function joinRoom(roomName:String)
