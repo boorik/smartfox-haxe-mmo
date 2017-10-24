@@ -150,8 +150,16 @@ class ClientView implements IView extends flash.display.Sprite
 
 	function onMouseClick(e:flash.events.MouseEvent)
 	{
+		
 		var destX = e.localX;
 		var destY = e.localY;
+
+		//Is the destination valid?
+		if(!mainScreen.isValidClickPosition(Std.int(destX),Std.int(destY)))
+		{
+			trace("not a valid position");
+			return;
+		}
 
 		// Evaluate avatar movement direction
 		var dx = destX - me.x;

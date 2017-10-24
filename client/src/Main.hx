@@ -32,5 +32,6 @@ class Main extends Sprite
 			addChild(cast(c.view,Sprite));
 			posY += Globals.clientHeight;
 		}
+
 	}
 }

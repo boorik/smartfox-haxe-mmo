@@ -1,7 +1,7 @@
 package view;
 
-import flash.text.TextField;
 import flash.display.Sprite;
+import flash.display.BitmapData;
 /**
  * ...
  * @author vincent blanchet
@@ -12,6 +12,7 @@ class MainScreen extends flash.display.Sprite
 	var worldMask:Sprite;
 	var tween:motion.actuators.GenericActuator<Dynamic>;
 	var mapObjects:Array<flash.display.DisplayObject>;
+	var hitmap:BitmapData;
 	
 	public var world(default,set):Sprite;
 	public var dWidth:Float;
@@ -21,6 +22,9 @@ class MainScreen extends flash.display.Sprite
 	{
 		super();
 
+		hitmap = openfl.Assets.getBitmapData("images/hitarea.png");
+		
+		//addChild(hitArea);
 		dWidth = Globals.gameViewWidthRatio*Globals.clientWidth;
 		dHeight = Globals.gameViewHeightRatio*Globals.clientHeight;
 
@@ -132,5 +136,16 @@ class MainScreen extends flash.display.Sprite
 		mapObjects.remove(obj);
 		world.removeChild(obj);
 	}
+	
+	public function isValidClickPosition(px:Int,py:Int):Bool
+	{
+		trace(px+", "+py);
+		trace(hitmap.width+"x"+hitmap.height);
+		var c = hitmap.getPixel32(px,py);
+		trace(c);
+		trace(c >> 24 & 0xFF);
+		return (c >> 24 & 0xFF) > 0;
+	}
+	
 	
 }
