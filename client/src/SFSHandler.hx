@@ -29,7 +29,7 @@ class SFSHandler
 
 	public var onMove:Move->Void;
 	public var onTurn:Int->String->Void;
-	public var onRoomJoined:String->Void;
+	public var onRoomJoined:String->Float->Float->flash.display.BitmapData->Void;
 	public var onLogin:Array<Room>->Void;
 
 	public var currentTurn:String;
@@ -222,6 +222,8 @@ class SFSHandler
 			com.smartfoxserver.v2.entities.match.RoomProperties.IS_GAME,
 			com.smartfoxserver.v2.entities.match.BoolMatch.EQUALS,
 			false);
+
+		trace(com.smartfoxserver.v2.entities.match.BoolMatch.EQUALS);
 		trace("condition:"+exp.condition);
 		var req = new com.smartfoxserver.v2.requests.FindRoomsRequest(exp);
 		sfs.addEventListener(SFSEvent.ROOM_FIND_RESULT,onRoomFound);
@@ -243,8 +245,24 @@ class SFSHandler
 		trace("toto:" + e.parameters);
 		var r:com.smartfoxserver.v2.entities.Room = e.parameters.room;
 		log("Room joined:" + r.name);
-		sfs.send(new SetUserPositionRequest(new Vec3D(10,10,0)));
-		onRoomJoined(r.name);
+		
+
+		// Retrieve Room Variable containing access points coordinates
+		// (see Extension comments to understand how data is organized)
+		var mapData = r.getVariable("mapData").getSFSObjectValue();
+		var accessPoints = mapData.getIntArray("accessPoints");
+
+		// Select a random access point among those available
+		var index = Math.floor(Math.random() * accessPoints.length / 2) * 2;
+		var accessX = accessPoints[index];
+		var accessY = accessPoints[index + 1];
+		sfs.send(new SetUserPositionRequest(new Vec3D(accessX,accessY,0)));
+
+		var hitmap = mapData.getByteArray("hitmap");
+		//var ba = new openfl.utils.ByteArray();
+		//ba.writeBytes()
+		var bmpData:flash.display.BitmapData = flash.display.BitmapData.fromBytes(cast hitmap);
+		onRoomJoined(r.name,accessX,accessY,bmpData);
 
 	}
 	private function onConnection(e:SFSEvent):Void 

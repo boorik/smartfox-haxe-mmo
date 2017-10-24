@@ -107,13 +107,13 @@ class Client
 
 	}
 
-	function onRoomJoined(roomName:String)
+	function onRoomJoined(roomName:String,posX:Float,posY:Float,hitmap:flash.display.BitmapData)
 	{
 		trace("roomName:" + roomName);
 		view.hideLogin();
 
 		trace(sfsHandler.me.getVariables());
-		view.loadMap(roomName);
+		view.loadMap(roomName,hitmap);
 		view.init(10,10);
 
 		#if !noBuddyList
@@ -125,7 +125,7 @@ class Client
 		view.onTextInputCB = onTextInput;
 		view.onItemClickedCB = sfsHandler.itemClicked;
 		view.displayAOI(Std.int(sfsHandler.aoi().px), Std.int(sfsHandler.aoi().py));
-		view.createAvatar(sfsHandler.me.id, "Me",10, 10,true);
+		view.createAvatar(sfsHandler.me.id, "Me",posX, posY,true);
 	}
 
 	function onItemClick(id:Int)

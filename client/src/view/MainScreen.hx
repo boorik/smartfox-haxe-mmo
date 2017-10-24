@@ -12,8 +12,8 @@ class MainScreen extends flash.display.Sprite
 	var worldMask:Sprite;
 	var tween:motion.actuators.GenericActuator<Dynamic>;
 	var mapObjects:Array<flash.display.DisplayObject>;
-	var hitmap:BitmapData;
 	
+	public var hitmap:BitmapData;
 	public var world(default,set):Sprite;
 	public var dWidth:Float;
 	public var dHeight:Float;

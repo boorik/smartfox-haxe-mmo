@@ -26,7 +26,7 @@ interface IView
 	function hideLogin():Void;
 	function showLevelSelect(mapItems:Map<String,MapData>):Void;
 	function hideLevelSelect():Void;
-	function loadMap(name:String):Void;
+	function loadMap(name:String,hitmap:flash.display.BitmapData):Void;
 	function createItem(id:Int, name:String, x:Float, y:Float,isOpen:Bool):Void;
 	function removeItem(id:Int):Void;
 }

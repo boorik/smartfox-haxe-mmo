@@ -91,6 +91,7 @@ class ClientView implements IView extends flash.display.Sprite
 			a.mouseEnabled = false;
 			a.mouseChildren = false;
 			me = a;
+			mainScreen.moveTo(x,y);
 		}else{
 			a.addEventListener(flash.events.MouseEvent.CLICK, onAvatarClick);
 		}
@@ -279,7 +280,7 @@ class ClientView implements IView extends flash.display.Sprite
 		mapSelector.destroy();
 	}
 
-	public function loadMap(name:String)
+	public function loadMap(name:String,hitmap:flash.display.BitmapData)
 	{
 		trace("searched:"+name);
 		var m:Sprite = maps.filter(function(s:Sprite){return s.name == name; })[0];
@@ -287,6 +288,8 @@ class ClientView implements IView extends flash.display.Sprite
 		m.scaleX = 1;
 		m.scaleY = 1;
 		mainScreen.world = m;
+		mainScreen.hitmap = hitmap;
+		addChild(new flash.display.Bitmap(hitmap));
 		mainScreen.world.addEventListener(flash.events.MouseEvent.CLICK,onMouseClick);
 	}
 
