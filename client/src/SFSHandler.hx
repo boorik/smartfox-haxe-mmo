@@ -249,7 +249,7 @@ class SFSHandler
 
 		// Retrieve Room Variable containing access points coordinates
 		// (see Extension comments to understand how data is organized)
-		var mapData = r.getVariable("mapData").getSFSObjectValue();
+		var mapData:SFSObject = cast r.getVariable("mapData").getSFSObjectValue();
 		var accessPoints = mapData.getIntArray("accessPoints");
 
 		// Select a random access point among those available
@@ -258,10 +258,15 @@ class SFSHandler
 		var accessY = accessPoints[index + 1];
 		sfs.send(new SetUserPositionRequest(new Vec3D(accessX,accessY,0)));
 
-		var hitmap = mapData.getByteArray("hitmap");
+	
+		var hitmap:flash.utils.ByteArray = new flash.utils.ByteArray();
+		hitmap.endian = flash.utils.Endian.LITTLE_ENDIAN;
+		hitmap.writeBytes(mapData.getByteArray("hitmap"));
+		
+		trace("hitmap:"+hitmap);
 		//var ba = new openfl.utils.ByteArray();
 		//ba.writeBytes()
-		var bmpData:flash.display.BitmapData = flash.display.BitmapData.fromBytes(cast hitmap);
+		var bmpData:flash.display.BitmapData = flash.display.BitmapData.fromBytes(mapData.getByteArray("hitmap"));
 		onRoomJoined(r.name,accessX,accessY,bmpData);
 
 	}
