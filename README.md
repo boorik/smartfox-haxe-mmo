@@ -1,5 +1,7 @@
 # SmartFoxServer 2X and Haxe MMO sample
 
+![SimpleMMOWorld2](/captures/Capture.PNG?raw=true "SimpleMMOWorld2")
+
 A sample project to explain how use haxe (http://haxe.org) with smarfoxserver 2X (http://www.smartfoxserver.com/) 
 
 This is an adaptation of the http://docs2x.smartfoxserver.com/ExamplesJS/simple-mmo example. More precisely the simple MMO world 2 example.
