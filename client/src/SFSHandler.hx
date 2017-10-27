@@ -1,8 +1,6 @@
 package;
 import com.smartfoxserver.v2.SmartFox;
 import com.smartfoxserver.v2.core.SFSEvent;
-import Commands;
-import Move;
 import com.smartfoxserver.v2.entities.Room;
 import com.smartfoxserver.v2.entities.MMORoom;
 import com.smartfoxserver.v2.entities.MMOItem;
