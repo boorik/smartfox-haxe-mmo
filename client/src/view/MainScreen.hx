@@ -139,12 +139,16 @@ class MainScreen extends flash.display.Sprite
 	
 	public function isValidClickPosition(px:Int,py:Int):Bool
 	{
-		trace(px+", "+py);
-		trace(hitmap.width+"x"+hitmap.height);
-		var c = hitmap.getPixel32(px,py);
-		trace(c);
-		trace(c >> 24 & 0xFF);
-		return (c >> 24 & 0xFF) > 0;
+		if (hitmap != null)
+		{
+			trace(px+", "+py);
+			trace(hitmap.width+"x"+hitmap.height);
+			var c = hitmap.getPixel32(px,py);
+			trace(c);
+			trace(c >> 24 & 0xFF);
+			return (c >> 24 & 0xFF) > 0;
+		}else	
+			return true;
 	}
 	
 	

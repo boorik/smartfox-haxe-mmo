@@ -258,7 +258,7 @@ class SFSHandler
 		var accessY = accessPoints[index + 1];
 		sfs.send(new SetUserPositionRequest(new Vec3D(accessX,accessY,0)));
 
-	
+		/*
 		var hitmap:flash.utils.ByteArray = new flash.utils.ByteArray();
 		hitmap.endian = flash.utils.Endian.LITTLE_ENDIAN;
 		hitmap.writeBytes(mapData.getByteArray("hitmap"));
@@ -267,7 +267,8 @@ class SFSHandler
 		//var ba = new openfl.utils.ByteArray();
 		//ba.writeBytes()
 		var bmpData:flash.display.BitmapData = flash.display.BitmapData.fromBytes(mapData.getByteArray("hitmap"));
-		onRoomJoined(r.name,accessX,accessY,bmpData);
+		*/
+		onRoomJoined(r.name,accessX,accessY,null);
 
 	}
 	private function onConnection(e:SFSEvent):Void 
@@ -349,6 +350,8 @@ class SFSHandler
 
 	function onBuddyListInitialized(e:SFSBuddyEvent)
 	{
+		trace("IsInited:" + sfs.buddyManager.isInited);
+		
 		trace("Buddy list inited");
 		var buddies:Array<Buddy> = sfs.buddyManager.buddyList;
 

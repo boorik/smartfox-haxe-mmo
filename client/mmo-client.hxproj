@@ -18,25 +18,24 @@
   <classpaths>
     <class path="G:\dev\projects\smartfox-haxe-mmo\client\devHaxeToolkithaxelib\actuate\1,8,7" />
     <class path="G:\dev\projects\smartfox-haxe-client" />
-    <class path="G:\dev\projects\smartfox-haxe-mmo\client\devHaxeToolkithaxelib\lime\5,7,1" />
-    <class path="G:\dev\projects\smartfox-haxe-mmo\client\devHaxeToolkithaxelib\openfl\6,2,2" />
+    <class path="G:\dev\projects\smartfox-haxe-mmo\client\devHaxeToolkithaxelib\lime\5,8,0" />
+    <class path="G:\dev\projects\smartfox-haxe-mmo\client\devHaxeToolkithaxelib\openfl\6,3,0" />
     <class path="G:\dev\projects\smartfox-haxe-mmo\client\devHaxeToolkithaxelib\haxe-crypto\0,0,7\src" />
     <class path="G:\dev\projects\smartfox-haxe-mmo\client\devHaxeToolkithaxelib\spritesheet\1,2,0" />
     <class path="src" />
     <class path="..\common" />
-    <class path="G:\dev\projects\smartfox-haxe-mmo\client\devHaxeToolkithaxelib\openfl\6,2,2\externs\core\flash" />
-    <class path="G:\dev\projects\smartfox-haxe-mmo\client\devHaxeToolkithaxelib\openfl\6,2,2\externs\core\openfl" />
-    <class path="G:\dev\projects\smartfox-haxe-mmo\client\devHaxeToolkithaxelib\openfl\6,2,2\externs\extras" />
-    <class path="bin\flash\haxe" />
+    <class path="G:\dev\projects\smartfox-haxe-mmo\client\devHaxeToolkithaxelib\openfl\6,3,0\externs\core\openfl" />
+    <class path="G:\dev\projects\smartfox-haxe-mmo\client\devHaxeToolkithaxelib\openfl\6,3,0\externs\extras" />
+    <class path="bin\neko\haxe" />
   </classpaths>
   <!-- Build options -->
   <build>
-    <option directives="actuate=1.8.7&#xA;smartfox-haxe-client=0.2.0&#xA;lime=5.7.1&#xA;openfl=6.2.2&#xA;haxe-crypto=0.0.7&#xA;spritesheet=1.2.0&#xA;tools=5.7.1&#xA;no-compilation&#xA;openfl-flash&#xA;web&#xA;display" />
+    <option directives="actuate=1.8.7&#xA;smartfox-haxe-client=0.2.0&#xA;lime=5.8.0&#xA;openfl=6.3.0&#xA;haxe-crypto=0.0.7&#xA;spritesheet=1.2.0&#xA;tools=5.8.0&#xA;no-compilation&#xA;native&#xA;lime-native&#xA;lime-vorbis&#xA;openfl-native&#xA;lime-cffi&#xA;windows&#xA;desktop&#xA;display" />
     <option flashStrict="False" />
     <option noInlineOnDebug="False" />
     <option mainClass="ApplicationMain" />
     <option enabledebug="True" />
-    <option additional="--macro lime.Lib.extraParams()&#xA;--macro openfl._internal.utils.ExtraParams.include()&#xA;-swf-version 17&#xA;-debug " />
+    <option additional="--macro lime.Lib.extraParams()&#xA;--macro openfl._internal.utils.ExtraParams.include()&#xA;--remap flash:openfl&#xA;-debug " />
   </build>
   <!-- haxelib libraries -->
   <haxelib>
