@@ -15,6 +15,9 @@ import com.smartfoxserver.v2.entities.variables.SFSUserVariable;
 import com.smartfoxserver.v2.entities.variables.UserVariable;
 import com.smartfoxserver.v2.entities.Buddy;
 import com.smartfoxserver.v2.core.SFSBuddyEvent;
+import haxe.io.Bytes;
+import haxe.io.BytesData;
+import flash.utils.ByteArray;
 import tools.SFSObjectTool;
 /**
  * ...
@@ -256,17 +259,21 @@ class SFSHandler
 		var accessY = accessPoints[index + 1];
 		sfs.send(new SetUserPositionRequest(new Vec3D(accessX,accessY,0)));
 
-		/*
-		var hitmap:flash.utils.ByteArray = new flash.utils.ByteArray();
-		hitmap.endian = flash.utils.Endian.LITTLE_ENDIAN;
-		hitmap.writeBytes(mapData.getByteArray("hitmap"));
-		
-		trace("hitmap:"+hitmap);
-		//var ba = new openfl.utils.ByteArray();
-		//ba.writeBytes()
-		var bmpData:flash.display.BitmapData = flash.display.BitmapData.fromBytes(mapData.getByteArray("hitmap"));
-		*/
-		onRoomJoined(r.name,accessX,accessY,null);
+
+        #if html5
+		var arrInt:Array<Int> =  mapData.getByteArray("hitmap");
+		var bt:Bytes = Bytes.alloc(arrInt.length);
+		for (i in 0...arrInt.length) 
+			bt.set(i, arrInt[i]);
+		var ba:BytesData = bt.getData();
+		#else
+		var ba: ByteArray =  mapData.getByteArray("hitmap");
+		#end
+
+		var bmpData:lime.app.Future<openfl.display.BitmapData> = flash.display.BitmapData.loadFromBytes(ba);
+		bmpData.onComplete(function(bd:openfl.display.BitmapData){
+			onRoomJoined(r.name,accessX,accessY,bd);
+		});
 
 	}
 	private function onConnection(e:SFSEvent):Void 

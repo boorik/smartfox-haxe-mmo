@@ -289,7 +289,7 @@ class ClientView implements IView extends flash.display.Sprite
 		m.scaleY = 1;
 		mainScreen.world = m;
 		mainScreen.hitmap = hitmap;
-		addChild(new flash.display.Bitmap(hitmap));
+		//addChild(new flash.display.Bitmap(hitmap));
 		mainScreen.world.addEventListener(flash.events.MouseEvent.CLICK,onMouseClick);
 	}
 

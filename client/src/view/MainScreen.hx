@@ -22,15 +22,9 @@ class MainScreen extends flash.display.Sprite
 	{
 		super();
 
-		hitmap = openfl.Assets.getBitmapData("images/hitarea.png");
-		
-		//addChild(hitArea);
 		dWidth = Globals.gameViewWidthRatio*Globals.clientWidth;
 		dHeight = Globals.gameViewHeightRatio*Globals.clientHeight;
 
-		//world = new Sprite();
-		//addChild(world);
-		//loadFloor();
 		worldMask = new Sprite();
 		worldMask.graphics.beginFill(0);
 		worldMask.graphics.drawRect(0, 0, dWidth, dHeight);
@@ -141,11 +135,7 @@ class MainScreen extends flash.display.Sprite
 	{
 		if (hitmap != null)
 		{
-			trace(px+", "+py);
-			trace(hitmap.width+"x"+hitmap.height);
 			var c = hitmap.getPixel32(px,py);
-			trace(c);
-			trace(c >> 24 & 0xFF);
 			return (c >> 24 & 0xFF) > 0;
 		}else	
 			return true;
