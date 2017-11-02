@@ -259,22 +259,12 @@ class SFSHandler
 		var accessY = accessPoints[index + 1];
 		sfs.send(new SetUserPositionRequest(new Vec3D(accessX,accessY,0)));
 
-
-        #if html5
-		var arrInt:Array<Int> =  mapData.getByteArray("hitmap");
-		var bt:Bytes = Bytes.alloc(arrInt.length);
-		for (i in 0...arrInt.length) 
-			bt.set(i, arrInt[i]);
-		var ba:BytesData = bt.getData();
-		#else
 		var ba: ByteArray =  mapData.getByteArray("hitmap");
-		#end
-
 		var bmpData:lime.app.Future<openfl.display.BitmapData> = flash.display.BitmapData.loadFromBytes(ba);
 		bmpData.onComplete(function(bd:openfl.display.BitmapData){
 			onRoomJoined(r.name,accessX,accessY,bd);
 		});
-
+		
 	}
 	private function onConnection(e:SFSEvent):Void 
 	{
