@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/boorik/smartfox-haxe-mmo.svg?branch=master)](https://travis-ci.org/boorik/smartfox-haxe-mmo)
+
 # SmartFoxServer 2X and Haxe MMO sample
 
 ![SimpleMMOWorld2](/captures/Capture.PNG?raw=true "SimpleMMOWorld2")
