@@ -21,7 +21,7 @@ before_install:
 install:
 
  - export LOG_FILE=/tmp/log 
- - haxelib git smartfox-haxe-client https://github.com/boorik/smartfox-haxe-client.git >> ${LOG_FILE})
+ - haxelib git smartfox-haxe-client https://github.com/boorik/smartfox-haxe-client.git >> ${LOG_FILE}
  - echo $(haxelib config) 
  - if [ -e ${LOG_FILE} ] ; then rm ${LOG_FILE}; fi 
  - travis_wait $(yes 'y' | haxelib --always install openfl >> ${LOG_FILE}) 
