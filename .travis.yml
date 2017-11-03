@@ -6,7 +6,7 @@ haxe:
 env:
   #- TARGET=flash
   - TARGET=neko
-  #- TARGET=cpp
+  - TARGET=cpp
   - TARGET=html5
   #- TARGET=docs
 
