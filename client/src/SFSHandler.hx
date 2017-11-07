@@ -15,8 +15,6 @@ import com.smartfoxserver.v2.entities.variables.SFSUserVariable;
 import com.smartfoxserver.v2.entities.variables.UserVariable;
 import com.smartfoxserver.v2.entities.Buddy;
 import com.smartfoxserver.v2.core.SFSBuddyEvent;
-import haxe.io.Bytes;
-import haxe.io.BytesData;
 import flash.utils.ByteArray;
 import tools.SFSObjectTool;
 /**
