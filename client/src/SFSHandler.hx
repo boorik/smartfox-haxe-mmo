@@ -122,7 +122,7 @@ class SFSHandler
 		var config:com.smartfoxserver.v2.SmartFox.ConfigObj = {host:"",port:0,useSSL:false,zone:"",debug:false};
 		#end
 		//config.debug = true;
-		config.host = "127.0.0.1";
+		config.host = "sfs2x.boorik.com";
 		config.port = #if html5 8080 #else 9933 #end;
 		config.zone = "SimpleMMOWorld2";
 		#if html5
@@ -270,11 +270,7 @@ class SFSHandler
 		{
 			log("Connected");
 			sfs.addEventListener(SFSEvent.LOGIN, onLoginCB);
-			#if html5
-			sfs.send(new LoginRequest(nick, null, null, "SimpleMMOWorld2"));
-			#else
 			sfs.send(new LoginRequest(nick, null, "SimpleMMOWorld2"));
-			#end
 		}else{
 			log("Unable to connect");
 		}
