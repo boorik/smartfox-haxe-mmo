@@ -27,6 +27,7 @@ install:
  - travis_wait $(yes 'y' | haxelib --always install openfl >> ${LOG_FILE}) 
  - travis_wait $(yes 'y' | haxelib --always run openfl setup >> ${LOG_FILE}) 
  - haxelib install spritesheet
+ - haxelib install jsprop
  - echo $(tail -100 ${LOG_FILE})
 
 before_script:
