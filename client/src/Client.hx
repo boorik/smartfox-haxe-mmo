@@ -170,14 +170,14 @@ class Client
 			var t = targetReg.matched(0);
 			trace("private message to "+t);
 			sfsHandler.sendPrivate(t,msg);
-		}else{
-			sfsHandler.sendPublic(msg);
 		}
+		else
+			sfsHandler.sendPublic(msg);
+		
 	}
 
 	function removeItem(i:com.smartfoxserver.v2.entities.MMOItem)
 	{
 		view.removeItem(cast i.id);
 	}
-	
 }
