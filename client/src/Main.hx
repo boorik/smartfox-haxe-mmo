@@ -31,11 +31,12 @@ class Main extends Sprite
 		numClient = MacroTools.getDefine("numClient");
 		#end
 		Globals.clientHeight = stage.stageHeight/numClient;
+
 		for(i in 0...numClient)
 		{
 			var c = new Client();
-			cast(c.view,Sprite).y = posY;
-			addChild(cast(c.view,Sprite));
+			c.view.y = posY;
+			addChild(c.view);
 			posY += Globals.clientHeight;
 		}
 

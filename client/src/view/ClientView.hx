@@ -1,6 +1,5 @@
 package view;
 
-import interfaces.IView;
 import com.smartfoxserver.v2.entities.Buddy;
 import flash.display.Sprite;
 import motion.easing.Linear;
@@ -9,7 +8,7 @@ import motion.easing.Linear;
  * ...
  * @author vincent blanchet
  */
-class ClientView implements IView extends flash.display.Sprite
+class ClientView extends flash.display.Sprite
 {
 	public var mainScreen:view.MainScreen;
 

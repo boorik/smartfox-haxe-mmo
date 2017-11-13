@@ -3,7 +3,7 @@ import com.smartfoxserver.v2.entities.User;
 import com.smartfoxserver.v2.entities.Buddy;
 import com.smartfoxserver.v2.entities.MMORoom;
 import com.smartfoxserver.v2.entities.Room;
-import interfaces.IView;
+
 /**
  * ...
  * @author vincent blanchet
@@ -20,7 +20,7 @@ class Client
 	
 	var itemsByRoomName:Map<String,MapData>;
 
-	public var view:IView;
+	public var view:view.ClientView;
 
 	var privReg = ~/^ *@[A-Z0-9.#]+ /i;
  	var targetReg = ~/[A-Z0-9.#]+/i;
