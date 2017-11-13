@@ -14,11 +14,11 @@ class Client
 	/**
 	 * reference to all player avatars
 	 */
-	var players:Map<Int,Player>;
+	var players:Map<Int, Player>;
 	var me:Player;
 	var sfsHandler:SFSHandler;
 	
-	var itemsByRoomName:Map<String,MapData>;
+	var itemsByRoomName:Map<String, MapData>;
 
 	public var view:view.ClientView;
 
@@ -26,24 +26,21 @@ class Client
  	var targetReg = ~/[A-Z0-9.#]+/i;
 	public function new() 
 	{
-		players = new Map<Int,Player>();
+		players = new Map<Int, Player>();
 		
 		view = new view.ClientView();
 		view.onMapSelected = onMapSelected;
 		view.showLogin("nick",init);
-		
 	}
 
 	function onMapSelected(roomName:String)
 	{
-		trace("selected:"+roomName);
 		view.hideLevelSelect();
 		sfsHandler.joinRoom(roomName);
 	}
 	
 	public function init(name:String)
 	{
-		
 		sfsHandler = new SFSHandler();
 		sfsHandler.log = view.log;
 		sfsHandler.onRoomJoined = onRoomJoined;
@@ -61,18 +58,18 @@ class Client
 		sfsHandler.connect(name);
 
 		view.moveCB = sfsHandler.sendPosition;
-	
-		
 	}
 
 	function onLogin(ra:Array<Room>)
 	{
-		itemsByRoomName = new Map<String,MapData>();
+		itemsByRoomName = new Map<String, MapData>();
+
 		for(r in ra)
 		{
 			var mmoRoom:MMORoom = cast r;
 			var setupObj = mmoRoom.getVariable("mapItems").getSFSObjectValue();
 			var items = [];
+
 			for(itemKey in setupObj.getKeys() )
 			{
 				var itemdata = setupObj.getSFSObject(itemKey);
@@ -98,16 +95,12 @@ class Client
 			mapData.fileName = reg.replace(mapData.fileName,"-");
 			mapData.itemDatas = items;
 			itemsByRoomName.set(mmoRoom.name,mapData);
-
-			
 		}
 
 		view.showLevelSelect(itemsByRoomName);
-		
-
 	}
 
-	function onRoomJoined(roomName:String,posX:Float,posY:Float,hitmap:flash.display.BitmapData)
+	function onRoomJoined(roomName:String, posX:Float, posY:Float, hitmap:flash.display.BitmapData)
 	{
 		trace("roomName:" + roomName);
 		view.hideLogin();
@@ -127,54 +120,46 @@ class Client
 		view.displayAOI(Std.int(sfsHandler.aoi().px), Std.int(sfsHandler.aoi().py));
 		view.createAvatar(sfsHandler.me.id, "Me",posX, posY,true);
 	}
-
-	function onItemClick(id:Int)
-	{
-		trace("item clicked:"+id);
-	}
 	
 	function createPlayer(u:User)
 	{
 		var p = new Player();
 		p.user = u;
 		players.set(u.id,p);
-		haxe.Timer.measure(view.createAvatar.bind(u.id, u.name, u.aoiEntryPoint.px, u.aoiEntryPoint.py));
+		view.createAvatar.bind(u.id, u.name, u.aoiEntryPoint.px, u.aoiEntryPoint.py);
 	}
 
 	function createItem(i:com.smartfoxserver.v2.entities.MMOItem,isOpen:Bool)
 	{
-		view.createItem(cast i.id,"barrel_"+i.id,i.aoiEntryPoint.px,i.aoiEntryPoint.py,isOpen);
+		view.createItem(cast i.id, "barrel_"+i.id, i.aoiEntryPoint.px, i.aoiEntryPoint.py, isOpen);
 	}
 
 	function removeUser(u:User)
 	{
 		view.removeAvatar(u.id);
 		players.remove(u.id);
-
 	}
 
 	function moveUser(u:User,x:Float,y:Float,dir:String)
 	{
 		if(!u.isItMe)
-			view.moveAvatar(u.id,x,y,dir);
+			view.moveAvatar(u.id, x, y, dir);
 	}
 
 	function displayBuddyList(bl:Array<Buddy>)
 	{
-		trace("buddies:"+bl);
 		view.updateBuddyList(bl);
 	}
 
 	function onAvatarClicked(id:Int)
 	{
 		var target = players.get(id).user;
-		trace(target);
 		sfsHandler.addBuddy(target);
 	}
 
 	function displayPublicMsg(u:User,msg:String)
 	{
-		view.displayPublicMessage(u.id, (u.isItMe? "ME" :u.name), msg);
+		view.displayPublicMessage(u.id, (u.isItMe? "ME" : u.name), msg);
 	}
 
 	function onTextInput(msg:String)
