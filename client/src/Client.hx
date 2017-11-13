@@ -64,23 +64,22 @@ class Client
 	{
 		itemsByRoomName = new Map<String, MapData>();
 
-		for(r in ra)
+		for (r in ra)
 		{
 			var mmoRoom:MMORoom = cast r;
 			var setupObj = mmoRoom.getVariable("mapItems").getSFSObjectValue();
 			var items = [];
 
-			for(itemKey in setupObj.getKeys() )
+			for (itemKey in setupObj.getKeys() )
 			{
 				var itemdata = setupObj.getSFSObject(itemKey);
-				
 				var item = new ItemData();
 				item.bitmapdata = Globals.envBitmapDatas.get(itemKey);
 				item.regX = itemdata.getInt("rx");
 				item.regY = itemdata.getInt("ry");
-				var coordsArray = itemdata.getIntArray("coords");
 				item.coordinates = [];
-				for(i in 0...Std.int(coordsArray.length/2))
+				var coordsArray = itemdata.getIntArray("coords");
+				for (i in 0...Std.int(coordsArray.length/2))
 				{
 					var index = i*2;
 					item.coordinates.push(new flash.geom.Point(coordsArray[index],coordsArray[index+1]));
@@ -164,7 +163,7 @@ class Client
 
 	function onTextInput(msg:String)
 	{
-		if(privReg.match(msg))
+		if (privReg.match(msg))
 		{
 			targetReg.match(privReg.matched(0));
 			var t = targetReg.matched(0);

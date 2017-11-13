@@ -40,7 +40,7 @@ class ClientView extends flash.display.Sprite
 		#if !noBuddyList
 		buddyListView = new view.BuddyListView();
 		buddyListView.onBuddyClicked = onBuddyClicked;
-		buddyListView.x = Globals.clientWidth*Globals.gameViewWidthRatio;
+		buddyListView.x = Globals.clientWidth * Globals.gameViewWidthRatio;
 		addChild(buddyListView);
 		#end
 
@@ -53,7 +53,6 @@ class ClientView extends flash.display.Sprite
 	function set_moveCB(value:Float->Float->String->Void):Float->Float->String->Void
 	{
 		moveCB = value;
-		//mainScreen.moveCB = value;
 		return moveCB;
 	}
 
@@ -62,12 +61,12 @@ class ClientView extends flash.display.Sprite
 		chatView.append(value);
 	}
 
-	public function createItem(id:Int, name:String, x:Float, y:Float,isOpen:Bool):Void
+	public function createItem(id:Int, name:String, x:Float, y:Float, isOpen:Bool):Void
 	{
-		var item = new view.Barrel(id,isOpen,onItemClickedCB);
+		var item = new view.Barrel(id, isOpen, onItemClickedCB);
 		item.x = x;
 		item.y = y;
-		items.set(id,item);
+		items.set(id, item);
 		mainScreen.addMapObject(item);
 
 	}
@@ -79,7 +78,7 @@ class ClientView extends flash.display.Sprite
 		item.destroy();
 	}
 
-	public function createAvatar(id:Int, name:String, x:Float, y:Float,isMe:Bool=false):Void
+	public function createAvatar(id:Int, name:String, x:Float, y:Float, isMe:Bool=false):Void
 	{
 		//trace("create Avatar at "+x+", "+y);
 		var a = new view.Avatar(id, name);
@@ -91,24 +90,23 @@ class ClientView extends flash.display.Sprite
 			a.mouseChildren = false;
 			me = a;
 			mainScreen.moveTo(x,y);
-		}else{
-			a.addEventListener(flash.events.MouseEvent.CLICK, onAvatarClick);
 		}
+		else
+			a.addEventListener(flash.events.MouseEvent.CLICK, onAvatarClick);
+		
 		mainScreen.addMapObject(a);
 		avatars.set(id, a);
-		
-
 		mainScreen.arrangeMapObject();
 	}
 
-	public function moveAvatar(id:Int, px:Float, py:Float,dir:String,isMe:Bool=false):Void
+	public function moveAvatar(id:Int, px:Float, py:Float, dir:String, isMe:Bool=false):Void
 	{
 		//trace("id:"+id);
 		var a = avatars.get(id);
 		a.dir = dir;
-		a.body.showBehavior("avatar"+dir);
+		a.body.showBehavior("avatar" + dir);
 
-		if(px != a.x && py!=a.y)
+		if (px != a.x && py != a.y)
 		{
 
 			// Calculate animation duration
@@ -123,9 +121,9 @@ class ClientView extends flash.display.Sprite
 			{
 				t.onUpdate(cbm);
 				t.onComplete(function(){cbm();a.body.showBehavior("avatarStand");});
-			}else{
+			}else
 				t.onComplete(function(){mainScreen.arrangeMapObject();a.body.showBehavior("avatarStand");});
-			}
+
 		}
 	}
 	
@@ -134,7 +132,7 @@ class ClientView extends flash.display.Sprite
 	**/
 	function cbm()
 	{
-		moveCB(me.x, me.y,me.dir);
+		moveCB(me.x, me.y, me.dir);
 		mainScreen.moveTo(me.x, me.y);
 		mainScreen.arrangeMapObject();
 	}
@@ -155,7 +153,7 @@ class ClientView extends flash.display.Sprite
 		var destY = e.localY;
 
 		//Is the destination valid?
-		if(!mainScreen.isValidClickPosition(Std.int(destX),Std.int(destY)))
+		if(!mainScreen.isValidClickPosition(Std.int(destX), Std.int(destY)))
 		{
 			trace("not a valid position");
 			return;
@@ -180,10 +178,7 @@ class ClientView extends flash.display.Sprite
 		var dir = Globals.AVATAR_DIRECTIONS[dirIndex];
 
 
-		moveAvatar(me.id, e.localX, e.localY,dir,true);
-		
-		//mainScreen.moveTo(e.localX,e.localY);
-		//moveCB(e.localX,e.localY);
+		moveAvatar(me.id, e.localX, e.localY, dir, true);
 	}
 
 	function onAvatarClick(e:flash.events.MouseEvent)
@@ -194,9 +189,9 @@ class ClientView extends flash.display.Sprite
 
 	}
 
-	public function init(x:Float,y:Float)
+	public function init(x:Float, y:Float)
 	{
-		mainScreen.moveTo(x,y);
+		mainScreen.moveTo(x, y);
 	}
 
 	public function updateBuddyList(ab:Array<com.smartfoxserver.v2.entities.Buddy>)
@@ -214,24 +209,24 @@ class ClientView extends flash.display.Sprite
 		onTextInputCB(t);
 	}
 
-	public function displayPublicMessage(id:Int,name:String,msg:String)
+	public function displayPublicMessage(id:Int, name:String, msg:String)
 	{
 		var a = avatars.get(id);
 		if(a != null)
 			a.say(msg);
-		chatView.append(name+" : "+msg);
+		chatView.append(name + " : " + msg);
 	}
 
-	public function displayAOI(width:Int,height:Int)
+	public function displayAOI(width:Int, height:Int)
 	{
-		mainScreen.displayAOI(width,height);
+		mainScreen.displayAOI(width, height);
 	}
 
-	public function showLogin(n:String,cb:String->Void):Void
+	public function showLogin(n:String, cb:String->Void):Void
 	{
-		login = new view.LoginView(n,cb);
-		login.x = (mainScreen.dWidth - login.width)/2;
-		login.y = (mainScreen.dHeight  - login.height)/2;
+		login = new view.LoginView(n, cb);
+		login.x = (mainScreen.dWidth - login.width) / 2;
+		login.y = (mainScreen.dHeight  - login.height) / 2;
 		addChild(login);
 	}
 
@@ -249,9 +244,9 @@ class ClientView extends flash.display.Sprite
 			map.name = m.name;
 			var bmp = new flash.display.Bitmap(openfl.Assets.getBitmapData("images/"+m.fileName+"-background.jpg"));
 			map.addChild(bmp);
-			for(item in m.itemDatas)
+			for (item in m.itemDatas)
 			{
-				for(p in item.coordinates)
+				for (p in item.coordinates)
 				{
 					var deco = new flash.display.Bitmap(item.bitmapdata);
 					deco.x = -item.regX;
@@ -268,8 +263,8 @@ class ClientView extends flash.display.Sprite
 		}
 
 		mapSelector = new LevelSelectView(maps,onMapSelected);
-		mapSelector.x = (mainScreen.dWidth - mapSelector.width)/2;
-		mapSelector.y = (mainScreen.dHeight  - mapSelector.height)/2;
+		mapSelector.x = (mainScreen.dWidth - mapSelector.width) / 2;
+		mapSelector.y = (mainScreen.dHeight  - mapSelector.height) / 2;
 		addChild(mapSelector);
 	}
 
@@ -279,7 +274,7 @@ class ClientView extends flash.display.Sprite
 		mapSelector.destroy();
 	}
 
-	public function loadMap(name:String,hitmap:flash.display.BitmapData)
+	public function loadMap(name:String, hitmap:flash.display.BitmapData)
 	{
 		trace("searched:"+name);
 		var m:Sprite = maps.filter(function(s:Sprite){return s.name == name; })[0];
@@ -288,8 +283,6 @@ class ClientView extends flash.display.Sprite
 		m.scaleY = 1;
 		mainScreen.world = m;
 		mainScreen.hitmap = hitmap;
-		//addChild(new flash.display.Bitmap(hitmap));
-		mainScreen.world.addEventListener(flash.events.MouseEvent.CLICK,onMouseClick);
+		mainScreen.world.addEventListener(flash.events.MouseEvent.CLICK, onMouseClick);
 	}
-
 }
