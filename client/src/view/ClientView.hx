@@ -80,7 +80,7 @@ class ClientView extends flash.display.Sprite
 
 	public function createAvatar(id:Int, name:String, x:Float, y:Float, isMe:Bool=false):Void
 	{
-		//trace("create Avatar at "+x+", "+y);
+		trace('create Avatar $id at $x, $y');
 		var a = new view.Avatar(id, name);
 		a.x = x;
 		a.y = y;

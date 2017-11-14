@@ -122,10 +122,12 @@ class Client
 	
 	function createPlayer(u:User)
 	{
+		trace('CREATE PLAYER $u');
 		var p = new Player();
 		p.user = u;
 		players.set(u.id,p);
-		view.createAvatar.bind(u.id, u.name, u.aoiEntryPoint.px, u.aoiEntryPoint.py);
+		view.createAvatar(u.id, u.name, u.aoiEntryPoint.px, u.aoiEntryPoint.py);
+		trace('Done');
 	}
 
 	function createItem(i:com.smartfoxserver.v2.entities.MMOItem,isOpen:Bool)
