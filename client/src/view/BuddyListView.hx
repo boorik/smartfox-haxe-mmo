@@ -1,11 +1,13 @@
 package view;
 import com.smartfoxserver.v2.entities.Buddy;
 import flash.events.MouseEvent;
+import flash.display.Sprite;
 
-class BuddyListView extends flash.display.Sprite
+class BuddyListView extends Sprite
 {
 	var label:openfl.text.TextField;
     public var onBuddyClicked:Buddy->Void;
+	var container:Sprite;
 
     public function new(){
         super();
@@ -23,6 +25,12 @@ class BuddyListView extends flash.display.Sprite
 		label.x = (this.width - label.width) / 2;
         label.height = 25;
 		addChild(label);
+		
+		container = new Sprite();
+		container.y = label.height + 10;
+		addChild(container);
+		
+		
     }
 
     public function update(ba:Array<Buddy>)
@@ -33,20 +41,20 @@ class BuddyListView extends flash.display.Sprite
         {
             var bv = new BuddyView(b);
 			bv.x = (this.width - bv.width) / 2;
-            bv.y = label.height+10;
+            bv.y = posY;
             bv.addEventListener(MouseEvent.CLICK,onMouseClick);
             posY += bv.height+2;
-            addChild(bv);
+            container.addChild(bv);
         }
     }
 
     public function clean()
     {
-        while(this.numChildren > 1)
+        while(container.numChildren > 1)
         {
-            var bv:BuddyView = cast getChildAt(0);
-            bv.addEventListener(MouseEvent.CLICK,onMouseClick);
-            removeChildAt(0);
+            var bv:BuddyView = cast container.getChildAt(0);
+            bv.removeEventListener(MouseEvent.CLICK,onMouseClick);
+            container.removeChildAt(0);
         }
     }
 
