@@ -104,7 +104,7 @@ class ClientView extends flash.display.Sprite
 		//trace("id:"+id);
 		var a = avatars.get(id);
 		a.dir = dir;
-		a.body.showBehavior("avatar" + dir);
+		a.body.showBehavior("avatar" + dir, false);
 
 		if (px != a.x && py != a.y)
 		{
